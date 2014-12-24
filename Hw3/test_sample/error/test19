@@ -1,0 +1,44 @@
+#pragma symbol off
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+float foo();
+
+int main(){
+	int i, j, k;
+
+	for(;;){
+		int apple;
+
+		for(orange = 2;;){}				//error
+
+		
+		for(; 1;){}						//error
+
+		
+		do{}while(1);					//error
+
+		for( i=0; i<k; i=i+j ){
+			if( i > 10000 ){
+				break;
+			}
+			else{
+				continue;				
+			}
+		}
+		
+	}
+
+	if(i == 1){
+		continue;						//error
+	}		
+	
+	if(1){}	else{}						//error
+
+	apple = 5;							//error
+
+	break;								//error
+
+	return foo();						//error
+}

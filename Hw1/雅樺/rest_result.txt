@@ -1,0 +1,46 @@
+Running test for comment
+***Pass***
+Running test for delim
+***Pass***
+Running test for error2
+***Pass***
+Running test for float
+***Pass***
+Running test for float_error2
+***Pass***
+Running test for general_1
+69,71c69,71
+< main	1
+< a	3
+< b	4
+---
+> main 	 1
+> a 	 3
+> b 	 4
+Running test for identifier
+***Pass***
+Running test for integer
+***Pass***
+Running test for keyword
+***Pass***
+Running test for op
+***Pass***
+Running test for pragma_errorcase
+***Pass***
+Running test for pragma_errorcase2
+***Pass***
+Running test for scientific
+81,83c81,83
+< e3	1
+< e	1
+< abC	1
+---
+> e3 	 1
+> e 	 1
+> abC 	 1
+Running test for scientific_error
+***Pass***
+Running test for string
+***Pass***
+Running test for string_error
+***Pass***

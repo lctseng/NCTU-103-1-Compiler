@@ -1,0 +1,25 @@
+#!/bin/sh 
+echo "====CORRECT check start===="
+error_cnt=0
+for file in ./testcases/correct/*
+do
+  echo "check $file"
+  ./parser $file > .check.tmp 2>&1 
+  if [ $? -ne 0 ]; then
+    echo "***ERROR:Unable to resolve CORRECT syntax in $file***"
+    error_cnt=$(($error_cnt + 1))
+  fi
+done
+echo "====CORRECT check finished, $error_cnt error(s) found===="
+echo "====WRONG check start===="
+error_cnt=0
+for file in ./testcases/wrong/*
+do
+  echo "check $file"
+  ./parser $file > .check.tmp 2>&1 
+  if [ $? -eq 0 ]; then
+    echo "***ERROR:Unable to resolve ERROR syntax in $file***"
+    error_cnt=$(($error_cnt + 1))
+  fi
+done
+echo "====WRONG check finished, $error_cnt error(s) found===="

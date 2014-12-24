@@ -1,0 +1,149 @@
+Running test for comment
+34a35
+> different : iDent3 iDent4
+Running test for delim
+***Pass***
+Running test for error2
+***Pass***
+Running test for float
+54c54
+< frequencies of identifiers:
+---
+> frequencies of identifiers
+Running test for float_error2
+***Pass***
+Running test for general_1
+17a18
+> not the same length:4 1
+22a24,25
+> not the same length:4 1
+> different : a b
+29c32
+< 8:     print "hello world";
+---
+> 8:     print hello world;
+31a35,36
+> not the same length:4 1
+> the same : a a
+39a45,47
+> not the same length:4 1
+> different : a b
+> the same : b b
+47a56,57
+> not the same length:4 1
+> the same : a a
+54a65,67
+> not the same length:4 1
+> different : a b
+> the same : b b
+56a70,72
+> not the same length:4 1
+> different : a b
+> the same : b b
+68,71c84,87
+< frequencies of identifiers:
+< main	1
+< a	3
+< b	4
+---
+> frequencies of identifiers
+> main                1         
+> a                   3         
+> b                   4         
+Running test for identifier
+9a10
+> not the same length:2 3
+14a16,17
+> not the same length:2 8
+> not the same length:3 8
+17a21,23
+> not the same length:2 8
+> not the same length:3 8
+> different : integerA integera
+22a29,32
+> not the same length:2 10
+> not the same length:3 10
+> not the same length:8 10
+> not the same length:8 10
+27a38,42
+> not the same length:2 7
+> not the same length:3 7
+> not the same length:8 7
+> not the same length:8 7
+> not the same length:10 7
+33a49,54
+> not the same length:2 6
+> not the same length:3 6
+> not the same length:8 6
+> not the same length:8 6
+> not the same length:10 6
+> not the same length:7 6
+34a56,62
+> not the same length:2 1
+> not the same length:3 1
+> not the same length:8 1
+> not the same length:8 1
+> not the same length:10 1
+> not the same length:7 1
+> not the same length:6 1
+37a66,73
+> not the same length:2 5
+> not the same length:3 5
+> not the same length:8 5
+> not the same length:8 5
+> not the same length:10 5
+> not the same length:7 5
+> not the same length:6 5
+> not the same length:1 5
+38a75,83
+> not the same length:2 1
+> not the same length:3 1
+> not the same length:8 1
+> not the same length:8 1
+> not the same length:10 1
+> not the same length:7 1
+> not the same length:6 1
+> different : r a
+> not the same length:5 1
+Running test for integer
+59c59
+< frequencies of identifiers:
+---
+> frequencies of identifiers
+Running test for keyword
+***Pass***
+Running test for op
+55a56
+> the same : mod mod
+Running test for pragma_errorcase
+***Pass***
+Running test for pragma_errorcase2
+1c1
+< Error at line 1: s
+---
+> Error at line 1:  
+Running test for scientific
+66a67
+> not the same length:2 1
+68a70,71
+> not the same length:2 3
+> not the same length:1 3
+80,83c83,86
+< frequencies of identifiers:
+< e3	1
+< e	1
+< abC	1
+---
+> frequencies of identifiers
+> e3                  1         
+> e                   1         
+> abC                 1         
+Running test for scientific_error
+***Pass***
+Running test for string
+2c2
+< frequencies of identifiers:
+---
+> frequencies of identifiers
+Running test for string_error
+***Pass***

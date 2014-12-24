@@ -1,0 +1,23 @@
+//minuserror
+#pragma source off
+#pragma token off
+#pragma statistic off
+int func();
+string a;
+int b;
+int main(){
+	int k=-1;
+	const int a = -5;
+	k=1--k;
+	a=(9+2*5)-4+3---3;
+	a=!!!!!!!b&&!!!!!!!!!!!!!5||!!!!!!!!!true;
+	a=-a;
+	b=--------------------------------------a;
+	c=--------------------------------------a;
+	a=--a;
+	a=--3;
+	b=!!b;
+	v=!!true;
+	d=--true;
+	a=!-a;
+}

@@ -1,0 +1,22 @@
+#pragma symbol on
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+bool func(int a, float b);
+const int d = 1;
+void main(){
+    int x;
+    int y[10];
+	
+    if(y[0] == 0){
+        float x;      
+       	double z;
+        z = 0.1;
+    }
+}
+
+bool func(int a, float b){
+    string c = "hello world";
+    return (b <= 1.0);
+}

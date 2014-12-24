@@ -1,0 +1,14 @@
+int main(){
+  if(a+b){}
+  if(a+b&&c){}
+  if(a+b>c){}
+  if(1+true){}
+  if(!(a+b)){}
+
+  while(a+b){}
+  while(true){}
+  a[3]=1;
+  a[true]=10;
+  a[-b]=1;
+  a[0+true]=10;
+}

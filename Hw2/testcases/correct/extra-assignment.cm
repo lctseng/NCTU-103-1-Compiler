@@ -1,0 +1,9 @@
+#pragma token off
+
+int a;
+int main(){
+  a=-(-(-id));
+  a=-(-id*id);
+  a=-id[2][3];
+  a=-func();
+}

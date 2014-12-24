@@ -1,0 +1,190 @@
+yacc -d -v   parser.y
+flex scanner.l
+gcc --std=c99  -Wno-implicit-function-declaration -DERR_FD=stdout -o parser  y.tab.c lex.yy.c -ly -lfl
+./parser input.c
+##########Error at Line #28: 'double' cannot be coerced into 'int'##########
+##########Error at Line #29: 'double' cannot be coerced into 'int'##########
+##########Error at Line #30: 'double' cannot be coerced into 'int'##########
+##########Error at Line #31: 'bool' cannot be coerced into 'int'##########
+##########Error at Line #32: 'bool' cannot be coerced into 'int'##########
+##########Error at Line #33: Only numeric constant can use negation '-'##########
+##########Error at Line #36: Only numeric constant can use negation '-'##########
+##########Error at Line #40: Only numeric constant can use negation '-'##########
+##########Error at Line #41: 'int' cannot be coerced into 'string'##########
+##########Error at Line #43: variable identifier 'clist1' has been declared in the same scope.##########
+##########Error at Line #46: function identifier 'func' has been declared in the same scope.##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+##########Error at Line #47: Last statment of non-void function must be a 'return' statment##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+ii                               variable   2(local)    int                                        
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+i                                variable   1(local)    int                                        
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+a                                parameter  1(local)    int                                        
+=======================================================================================
+##########Error at Line #59: Array index must greater than 0##########
+##########Error at Line #59: parameter identifier 'a' has been declared in the same scope.##########
+##########Error at Line #61: 'string' cannot be coerced into 'bool'##########
+##########Error at Line #62: Logical operator NOT:'!' expect a boolean operand, but 'string' provided.##########
+##########Error at Line #63: Binary logical operator expect a boolean operand on left-hand-side, but 'string' provided.##########
+##########Error at Line #64: Only numeric expression can use negation '-', but 'bool' provided.##########
+##########Error at Line #66: arithmetic 'Mod' operator expect a(n) 'integer operand' on right-hand-side, but 'float' provided.##########
+##########Error at Line #67: 'int' cannot be coerced into 'bool'##########
+##########Error at Line #68: 'double' cannot be coerced into 'int'##########
+##########Error at Line #69: variable identifier 'a' has been declared in the same scope.##########
+##########Error at Line #70: Function call 'func' error : parameter types are not consist with its declaration##########
+##########Error at Line #74: 'double' cannot be coerced into 'int'##########
+##########Error at Line #79: Function call 'func' error : parameter types are not consist with its declaration##########
+##########Error at Line #82: Array index must greater than 0##########
+##########Error at Line #83: Cannot do assignment to constant variable##########
+##########Error at Line #85: 'bool' cannot be coerced into 'int'##########
+##########Error at Line #86: variable/parameter/constant identifier 'ccc' not declared.##########
+##########Error at Line #87: Array index must greater than or equal to 0##########
+##########Error at Line #87: Cannot use array notation for non-array type 'int'##########
+##########Error at Line #88: Array index must greater than or equal to 0##########
+##########Error at Line #88: Array index must be scalar integer type##########
+##########Error at Line #88: Cannot use array notation for non-array type 'int'##########
+##########Error at Line #89: Function call 'func' error : parameter types are not consist with its declaration##########
+##########Error at Line #91: Function call 'func2' error : parameter types are not consist with its declaration##########
+##########Error at Line #92: Function 'func4' isn't declared.##########
+##########Error at Line #94: arithmetic 'Add' operator expect a(n) 'numeric operand' on left-hand-side, but 'string' provided.##########
+##########Error at Line #95: 'int' cannot be coerced into 'bool'##########
+##########Error at Line #97: Cannot use array notation for non-array type 'int'##########
+##########Error at Line #98: 'int' cannot be coerced into 'bool'##########
+##########Error at Line #99: Cannot do assignment to constant variable##########
+##########Error at Line #100: Cannot do assignment to constant variable##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+a                                parameter  1(local)    int                                        
+b                                parameter  1(local)    float                                      
+double1                          variable   1(local)    double                                     
+bool1                            variable   1(local)    bool                                       
+int2                             variable   1(local)    int                                        
+intArr                           variable   1(local)    int[4]                                     
+strA                             variable   1(local)    string                                     
+strB                             variable   1(local)    string                                     
+strArr                           variable   1(local)    string[5]                                  
+strArr2                          variable   1(local)    string[4]                                  
+res                              variable   1(local)    bool                                       
+cInt                             constant   1(local)    int                10                      
+=======================================================================================
+##########Error at Line #102: Last statment of non-void function must be a 'return' statment##########
+##########Error at Line #104: Parameter types of function definition is not match with declaration##########
+##########Error at Line #107: 'void' cannot be used to declare variable/constant/parameter##########
+##########Error at Line #111: Function call 'funcMismatch' error : parameter types are not consist with its declaration##########
+##########Error at Line #114: variable/parameter/constant identifier 'param' not declared.##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+db                               constant   1(local)    double             10.500000               
+fb                               constant   1(local)    float              10.500000               
+a                                variable   1(local)    int[2][2][2]                               
+b                                variable   1(local)    int                                        
+=======================================================================================
+##########Error at Line #115: Last statment of non-void function must be a 'return' statment##########
+##########Error at Line #119: Array initializer:The number of initializer exceeds the array size##########
+##########Error at Line #120: Array initializer:The number of initializer exceeds the array size##########
+##########Error at Line #122: 'string' cannot be coerced into 'int'##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+a                                variable   1(local)    int[3]                                     
+d                                variable   1(local)    int[5]                                     
+=======================================================================================
+##########Error at Line #130: 1 dimension of int array type is not allow here.##########
+##########Error at Line #131: Array cannot be involved in assignment##########
+##########Error at Line #132: Array cannot be involved in assignment##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+a                                parameter  1(local)    int[3][3]                                  
+b                                parameter  1(local)    int[5][3]                                  
+i                                parameter  1(local)    int                                        
+k                                variable   1(local)    int                                        
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+##########Error at Line #144: Function 'WTF123456789012345678901234567890' isn't declared.##########
+##########Error at Line #145: Function 'WTF123456789012345678901234567890' isn't declared.##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+##########Error at Line #154: 'break/continue' can only used inside loops##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+##########Error at Line #156: Cannot use 'read' on a constant variable.##########
+##########Error at Line #158: Cannot use 'read' on an array variable.##########
+##########Error at Line #160: Cannot use 'print' on an array variable.##########
+##########Error at Line #162: Expect a boolean expression here, but 'int' provided##########
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+a                                parameter  1(local)    int                                        
+b                                parameter  1(local)    bool                                       
+array                            parameter  1(local)    int[10][9][8]                              
+e04                              variable   1(local)    bool                                       
+i                                variable   1(local)    int                                        
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+a                                variable   1(local)    int                                        
+=======================================================================================
+=======================================================================================
+Name                             Kind       Level       Type               Attribute               
+---------------------------------------------------------------------------------------
+g                                variable   0(global)   int                                        
+a                                variable   0(global)   int                                        
+b                                variable   0(global)   int                                        
+c                                variable   0(global)   int                                        
+gr                               variable   0(global)   int[1]                                     
+clist1                           constant   0(global)   int                123                     
+clist3                           constant   0(global)   int                0                       
+bool2                            constant   0(global)   bool               true                    
+bool3                            constant   0(global)   bool               false                   
+double1                          constant   0(global)   double             -4.646000               
+float1                           constant   0(global)   float              10.000000               
+str1                             constant   0(global)   string             Hello world!            
+e04                              variable   0(global)   string[10][9]                              
+func                             function   0(global)   bool               int,float,string[4],int[4]
+func2                            function   0(global)   int                int                     
+func3                            function   0(global)   float                                      
+test                             function   0(global)   void                                       
+main                             function   0(global)   int                int,float,bool          
+funcMismatch                     function   0(global)   int                float                   
+foo                              function   0(global)   void                                       
+foobar                           function   0(global)   int                int[3][3],int[5][3],int 
+WTF12345678901234567890123456789 function   0(global)   int                int,bool,int[10][9][8]  
+functest                         function   0(global)   void                                       
+=======================================================================================
+##########Error at Line #175: Function func has been declared but not be defined##########
+##########Error at Line #175: Function funcMismatch has been declared but not be defined##########

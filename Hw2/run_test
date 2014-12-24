@@ -1,0 +1,2 @@
+#!/bin/sh -ev
+./parser ./testcases/correct/$1

@@ -1,0 +1,26 @@
+#pragma symbol on
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+int foo();
+
+void  main(){
+ 	int array[5][5][5];
+}
+
+int foo(){
+	int arr[3][90];
+	float farr[5][8];
+	double darr[99][99];
+	
+	for(;;){
+		bool barr[9];
+		
+		for(;;){
+			string sarr[6];
+		}
+	}
+	
+	return 0;
+}

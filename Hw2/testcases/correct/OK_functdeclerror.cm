@@ -1,0 +1,8 @@
+//compounderror a mismatch brace
+#pragma source off
+#pragma token off
+#pragma statistic off
+int func();
+string a;
+int b;
+int main(){}

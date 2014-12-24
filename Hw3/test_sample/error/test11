@@ -1,0 +1,10 @@
+#pragma symbol off
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+int foo();
+
+bool main(){
+	return foo();			//error
+}

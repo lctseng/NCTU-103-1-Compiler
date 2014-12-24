@@ -1,0 +1,8 @@
+#!/bin/sh
+rm ErrorOutput
+for file in test_public/wrong/*
+do
+  echo "錯誤測資：" $file >> ErrorOutput
+  
+  ./parser $file 2>>ErrorOutput
+done

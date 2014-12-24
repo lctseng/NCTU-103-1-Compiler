@@ -1,0 +1,20 @@
+
+|--------------------------------------------------------------------------
+| Error found in Line #11:     func() =
+|
+| Unmatched token: =
+|--------------------------------------------------------------------------
+1:/**
+
+2: * simplestmterror.cm: about assignment
+
+3: */
+
+Reduce INT to type
+funct_decl seen ()
+Reduce  to funct_decl 
+Reduce function to decl_list
+Reduce INT to type
+funct_def seen ()
+Func call see ()
+Reduce to function call

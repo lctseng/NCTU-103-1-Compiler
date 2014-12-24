@@ -1,0 +1,4 @@
+#pragma source on
+int main(){
+  a[d||b] = 3;
+}

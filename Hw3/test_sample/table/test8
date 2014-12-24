@@ -1,0 +1,9 @@
+#pragma symbol on
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+void main(int a){
+			
+	
+}

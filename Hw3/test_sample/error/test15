@@ -1,0 +1,54 @@
+#pragma symbol off
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+int foo();
+void foo3( int a, string b);
+string foo5(double d);
+double foo6( bool b[10][20]);
+
+void main(){
+	int i, j, k;
+	float f;
+	double d;
+	string s;
+	bool b;
+	
+	i = j % foo();
+	foo2();							//error
+	foo3( i, b );					//error
+
+}
+
+void foo(){}						//error
+
+int foo2(){
+	bool b;
+	float d;
+
+	b = foo() + 1.5;				//error
+	b = ( foo() > 1 );
+	d = foo();
+
+	return "project 3";				//error
+}
+
+void foo4(){
+	int array[2]={1, foo2()};
+
+}
+
+string foo5(float d){}				//error
+
+double foo6( bool b[5][6]){			//error
+	
+}
+
+int foo7(){
+	int array[2][2];
+
+	return array[0][1];
+}
+
+int foo7(){}						//error

@@ -1,0 +1,5 @@
+%Start COMMENT
+%%
+<COMMENT>. ;
+<COMMENT>"*/" BEGIN INITIAL;
+"/*" BEGIN COMMENT;

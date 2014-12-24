@@ -1,0 +1,30 @@
+#pragma symbol on
+#pragma token off
+#pragma source off
+#pragma statistic off
+
+void  main(){
+    int i;
+	
+	for(;;){
+		int ii;
+		
+		if(true){
+			int iiii;
+			
+			do{
+				int iiiii;
+				
+				while(true){
+					int iiiiii;
+				}
+				
+			}while(true);
+			
+		}
+	
+	}
+	
+ 	
+}
+
