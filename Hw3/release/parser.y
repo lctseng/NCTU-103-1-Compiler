@@ -448,6 +448,7 @@ bool do_type_coercion(typeStruct_t* pTarget,typeStruct_t* pType){
                     }
                     result = true;
                 }
+                /*
                 else if(pType->v_type==T_DOUBLE && pType->is_const && pType->is_raw){
                     // raw float
                     if(!coercion_check_only){
@@ -456,6 +457,7 @@ bool do_type_coercion(typeStruct_t* pTarget,typeStruct_t* pType){
                     }
                     result = true;
                 }
+                */
                 else{
                     result = false;
                 }
@@ -1194,11 +1196,13 @@ single_const : scalar_id ASSIGN literal_constant {
                 typeStruct_t type;
                 memcpy(&type,&$3,sizeof(type));
                 type.is_raw = false;
+                /*
                 // float generate
                 if(typeTmp.v_type==T_FLOAT && type.v_type == T_DOUBLE){ 
                     type.v_type = T_FLOAT;
                     type.fval = (float)type.dval;
                 }
+                */
                 // try to coercion, convert type struct type recorded in typeTmp
                 if(do_type_coercion(&typeTmp,&type)){
                     process_constant_declare($1,type);
@@ -1208,11 +1212,13 @@ single_const : scalar_id ASSIGN literal_constant {
                 typeStruct_t type;
                 memcpy(&type,&$4,sizeof(type));
                 type.is_raw = false;
+                /*
                 // float generate
                 if(typeTmp.v_type==T_FLOAT && type.v_type == T_DOUBLE){ 
                     type.v_type = T_FLOAT;
                     type.fval = (float)type.dval;
                 }
+                */
                 if(do_type_coercion(&typeTmp,&type)){ // try to coercion, convert type struct type recorded in typeTmp
                     bool success = true;
                     switch(typeTmp.v_type){

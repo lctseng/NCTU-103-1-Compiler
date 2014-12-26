@@ -357,11 +357,11 @@ blank [ \t]
  /**** Floating-Point Constant ****/
 <INITIAL>{digit}+"."{digit}+ {
     tokenString("float", yytext);
-    yylval.typeStruct.v_type = T_DOUBLE;
+    yylval.typeStruct.v_type = T_FLOAT;
     yylval.typeStruct.is_const = 1;
     yylval.typeStruct.dim = 0;
     yylval.typeStruct.is_raw = true;
-    yylval.typeStruct.dval = atof(yytext);
+    yylval.typeStruct.fval = atof(yytext);
     return FLOATING_CONSTANT;
 }
 
