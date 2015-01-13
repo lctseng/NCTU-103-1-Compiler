@@ -1,6 +1,7 @@
 %{
 #define LIST                { strncat(buf, yytext, sizeof(buf) - strlen(buf) - 1); }
 #define SADD(s)                { strncat(strbuf, s, sizeof(strbuf) - strlen(strbuf) - 1); }
+#define SRADD(s)                { strncat(strRealBuf, s, sizeof(strRealBuf) - strlen(strRealBuf) - 1); }
 #define token(t)            { LIST; if (Opt_Token) printf("<%s>\n", #t); }
 #define tokenString(t, s)   { LIST; if (Opt_Token) printf("<%s:%s>\n", t, s); }
 #define tokenStringN(t, s)   {if (Opt_Token) printf("<%s:%s>\n", t, s); }
@@ -22,6 +23,7 @@ int linenum = 1;
 int* ctrl_target = NULL;
 char buf[MAX_LINE_LENGTH];
 char strbuf[MAX_LINE_LENGTH];
+char strRealBuf[MAX_LINE_LENGTH];
 void line_process(void);
 void register_id(const char* );
 void dispose_id_table();
@@ -272,7 +274,7 @@ blank [ \t]
 
  
  /**** Identifier ****/
-<INITIAL>{letter}({digit}|{letter}|_)* {
+<INITIAL>{letter}({digit}|{letter})* {
     tokenString("id", yytext);
     // copy name
     yylval.text = (char *)strdup(yytext);
@@ -392,6 +394,7 @@ blank [ \t]
 <INITIAL>\" {
     LIST;
     strbuf[0] = '\0';
+    strRealBuf[0] = '\0';
     BEGIN STRING_STATE;
 }
  /* End of String */
@@ -402,35 +405,41 @@ blank [ \t]
     yylval.typeStruct.v_type = T_STRING;
     yylval.typeStruct.is_const = 1;
     yylval.typeStruct.dim = 0;
-    yylval.typeStruct.sval = (char *)strdup(strbuf);
+    yylval.typeStruct.sval = (char *)strdup(strRealBuf);
     add_string(yylval.typeStruct.sval);
     strbuf[0] = '\0';
+    strRealBuf[0] = '\0';
     return STRING_CONSTANT;
 }
  /* escape:" */
 <STRING_STATE>\\\" {
     LIST;
     SADD("\"");
+    SRADD("\"");
 }
  /* escape:\t */
 <STRING_STATE>\\t {
     LIST;
     SADD("\t");
+    SRADD("\\t");
 }
  /* escape:\n */
 <STRING_STATE>\\n {
     LIST;
     SADD("\n");
+    SRADD("\\n");
 }
  /* escape:\ */
 <STRING_STATE>\\\\ {
     LIST;
     SADD("\\");
+    SRADD("\\\\");
 }
  /* Rest of character in string */
 <STRING_STATE>. {
     LIST;
     SADD(yytext);
+    SRADD(yytext);
 }
 
 

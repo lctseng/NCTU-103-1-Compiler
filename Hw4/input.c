@@ -25,9 +25,11 @@ int foo( int a , int ab ) {
 }
 
 int main() {
+    const string d = "w\tw\tw\n";
     int c = 10 ;
+    print d;
     read a;
-    
+   
     c = foo( a , 999);
     print c;
     print foo(100,1);

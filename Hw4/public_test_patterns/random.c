@@ -15,6 +15,7 @@ int rand() {
 	else {
 		return -mySeed;
 	}	
+	return 0;
 }
 
 int main() {

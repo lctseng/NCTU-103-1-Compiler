@@ -1,5 +1,5 @@
-int temp_int_value;
-float temp_float_value;
+int intvalue;
+float floatvalue;
 
 int main() {
 	int a, b, c;
@@ -26,19 +26,19 @@ int main() {
 	print f;
 	print "\n";
 	
-	// swap b and c, take temp_int_value as temp storage
-	temp_int_value = b;
+	// swap b and c, take intvalue as temp storage
+	intvalue = b;
 	b = c;
-	c = temp_int_value;
+	c = intvalue;
 	print b;
 	print " ";
 	print c;
 	print "\n";
 	
 	// swap e and f, take gr as temp storage
-	temp_float_value = f;
+	floatvalue = f;
 	f = e;
-	e = temp_float_value;
+	e = floatvalue;
 	print e;
 	print " ";
 	print f;

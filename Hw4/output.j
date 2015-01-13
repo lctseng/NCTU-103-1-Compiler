@@ -30,8 +30,7 @@
 ; Line #11: bool bar(){
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc "BAR!!
-"
+    ldc "BAR!!\n"
     invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 ; Line #12:     print "BAR!!\n";
 
@@ -133,40 +132,46 @@ LABEL_WHILE_EXIT_1:
     putstatic output/_sc Ljava/util/Scanner;
 ; Line #27: int main() {
 
+; Line #28:     const string d = "w\tw\tw\n";
+
     ldc 10
     istore 1
-; Line #28:     int c = 10 ;
+; Line #29:     int c = 10 ;
+
+    getstatic java/lang/System/out Ljava/io/PrintStream;
+    ldc "w\tw\tw\n"
+    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+; Line #30:     print d;
 
     getstatic output/_sc Ljava/util/Scanner;
     invokevirtual java/util/Scanner/nextInt()I
     putstatic output/a I
-; Line #29:     read a;
+; Line #31:     read a;
 
-; Line #30:     
+; Line #32:    
 
     getstatic output/a I
     ldc 999
     invokestatic output/foo(II)I
     istore 1
-; Line #31:     c = foo( a , 999);
+; Line #33:     c = foo( a , 999);
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
     iload 1
     invokevirtual java/io/PrintStream/print(I)V
-; Line #32:     print c;
+; Line #34:     print c;
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
     ldc 100
     ldc 1
     invokestatic output/foo(II)I
     invokevirtual java/io/PrintStream/print(I)V
-; Line #33:     print foo(100,1);
+; Line #35:     print foo(100,1);
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc "
-"
+    ldc "\n"
     invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-; Line #34:     print "\n";
+; Line #36:     print "\n";
 
     iload 1
     ldc 100
@@ -180,41 +185,39 @@ LABEL_BOOLEXPR_TRUE_3:
     iconst_1 ; true = 1
 LABEL_BOOLEXPR_FALSE_3:
     ifeq LABEL_IF_FALSE_4
-; Line #35:     if( c >= 100 ) {
+; Line #37:     if( c >= 100 ) {
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc "c >= 100 
-"
+    ldc "c >= 100 \n"
     invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-; Line #36:         print "c >= 100 \n";
+; Line #38:         print "c >= 100 \n";
 
-; Line #37:     }
+; Line #39:     }
 
     goto LABEL_IF_EXIT_4
 LABEL_IF_FALSE_4:
-; Line #38:     else {
+; Line #40:     else {
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc "c < 100 
-"
+    ldc "c < 100 \n"
     invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-; Line #39:         print "c < 100 \n";
+; Line #41:         print "c < 100 \n";
 
 LABEL_IF_EXIT_4:
-; Line #40:     }
+; Line #42:     }
 
     ldc 0
-; Line #41:     return 0;
-
-; Line #42: 
-
-    return
-.end method
-; Line #43: }
+; Line #43:     return 0;
 
 ; Line #44: 
 
-; Line #45: 
+    return
+.end method
+; Line #45: }
 
 ; Line #46: 
+
+; Line #47: 
+
+; Line #48: 
 
