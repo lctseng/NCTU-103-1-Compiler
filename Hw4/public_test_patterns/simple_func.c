@@ -1,12 +1,6 @@
-void function() {}
-
-float square( float a ) {
-	return a * a;
-}
-
-void printSeperator() {
-	print "--------------------\n";
-}
+void function();
+float square( float a );
+void printSeperator();
 
 int main() {
 	float r;
@@ -27,6 +21,17 @@ int main() {
 
 	return 0;
 }
+
+void function(){};
+
+float square( float a ) {
+	return a * a;
+}
+
+void printSeperator() {
+	print "--------------------\n";
+}
+
 
 
 /*

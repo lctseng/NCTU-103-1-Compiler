@@ -1,22 +1,8 @@
 int mySeed;
 const int INITIALIZE = 123456789;
 
-void srand( int seed ) {
-	mySeed = seed;
-}
-
-int rand() {
-	mySeed = mySeed * 234 + 123;
-	
-	if( mySeed >= 0 ) {
-		return mySeed;
-	}
-	
-	else {
-		return -mySeed;
-	}	
-	return 0;
-}
+void srand( int seed );
+int rand();
 
 int main() {
 	int i = 1, grade;
@@ -46,7 +32,22 @@ int main() {
 	return 0;
 }
 
+void srand( int seed ) {
+	mySeed = seed;
+}
 
+int rand() {
+	mySeed = mySeed * 234 + 123;
+	
+	if( mySeed >= 0 ) {
+		return mySeed;
+	}
+	
+	else {
+		return -mySeed;
+	}	
+	return 0;
+}
 /*
 Input:
 No input

@@ -356,12 +356,19 @@ s_table_entry* create_basic_entry(const char* name,int kind){
                 // local variables
                 //DEBUG//printf("New Local Variable %s with var num %d\n",name,nextVarNum);
                 ent->varNum = nextVarNum;
+                // next starting var num , one more if current is double
                 ++nextVarNum;
+                if(ent->type.v_type == T_DOUBLE){
+                    ++nextVarNum;
+                }
             }
         }
         else if(kind == K_PARAMETER){
             // only need to fill var num
             ent->varNum = paramVarNum++;
+            if(ent->type.v_type == T_DOUBLE){
+                ++paramVarNum; // double , one more
+            }
         }
     }
     // clear array
