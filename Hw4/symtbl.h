@@ -18,6 +18,7 @@
 #define MAX_JAVA_STACK 110
 #define MAX_JAVA_LOCAL 110 
 #define MAX_LABEL_STACK 1024
+#define MAX_FUNCTION_CALL 100
 
 #define VN_START (MAX_JAVA_LOCAL - 10)
 #define VN_TMP1 (VN_START + 1)
@@ -160,6 +161,17 @@ typedef struct{
     stack_t stk;
     int count;
 } labelMgmt_t;
+// function call struct
+typedef struct{
+    typeList_t list;
+    int index;
+} funcCall_t;
+// function call stack
+typedef struct{
+    int end;
+    funcCall_t data[MAX_FUNCTION_CALL];
+} funcCallStk_t;
+
 
 
 
@@ -174,6 +186,8 @@ void initLabelMgmt(labelMgmt_t* pMgmt);
 s_table_entry* findEntryByName(const char* name,EntryChecker);
 // find the var entry of the variable, search outward to global
 s_table_entry* findVarEntry(const char* name);
+// find function entry
+s_table_entry* findFuncEntry(const char* name);
 // check typeStruct is not NULL and not T_ERROR
 bool checkTypeStructSanity(typeStruct_t* pType);
 // fill the content in typeStruct accroding to sym_attr 
@@ -187,6 +201,10 @@ int topLabel();
 // entry checker
 bool entryIsVar(s_table_entry* ent);
 bool entryIsFunction(s_table_entry* ent);
+// init funcCall stack
+void initFuncCallStk();
+void pushFuncCall(const char* name);
+void popFuncCall();
 
 //*** assembly related ***//
 void asmGenProgramHead();
@@ -266,3 +284,4 @@ void asmGenFunctionReturn(int dstType,int srcType);
 void asmGenFunctionCall(const char* name,bool discard);
 // function args type generate by typeList
 void asmGenFunctionTypebyList(typeList_t* pList);
+void asmGenFunctionCallCoercion(typeStruct_t* pType);

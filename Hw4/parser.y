@@ -33,10 +33,13 @@ int greaterType = T_ERROR; // store greater type if needed
 int loopTypeTmp = LOOP_NONE;
 int paramVarNum = 0;
 
+
 // label mgmt
 labelMgmt_t labelM;
 // loop stack
 stack_t loopStk;
+// function call name stack
+funcCallStk_t funcCallStk;
 
 // targe file
 FILE* asmOut;
@@ -366,9 +369,6 @@ s_table_entry* create_basic_entry(const char* name,int kind){
         else if(kind == K_PARAMETER){
             // only need to fill var num
             ent->varNum = paramVarNum++;
-            if(ent->type.v_type == T_DOUBLE){
-                ++paramVarNum; // double , one more
-            }
         }
     }
     // clear array
@@ -600,32 +600,26 @@ bool check_typeList_consist(typeList_t* a,typeList_t* b,bool allow_coercion){
 int check_function_call_consist(const char* name,typeList_t* pTypeList){
     int ret_type = T_ERROR; // -1 means not found
     int errType = ENTRY_NOT_FOUND; // extra error msg
-    // search global table for function 
     bool old_supress = supressError;
     supressError = true;
-    symbol_table* pTable = global_table();
-    for(int i=0;i<pTable->end;i++){
-        s_table_entry* ent = &pTable->entries[i];
-        // function kind only
-        if(ent->kind == K_FUNCTION){
-            // same name
-            if(strcmp(name,ent->name)==0){
-                // check type list consist
-                //DEBUG//printf("Check function call...\n");
-                if(check_typeList_consist(&ent->attr.param_list,pTypeList,true)){
-                    // find return function type
-                    ret_type = ent->type.v_type;
-                    //DEBUG//printf("Table search : type '%s' for function '%s'\n",TYPE_NAME[ret_type],name);
-                }
-                else{
-                    // parameter mismatch
-                    ret_type = T_ERROR;
-                    errType = ENTRY_MISMATCH;
-                }
-                break;
-            }
+    // search global table for function 
+    s_table_entry* ent = findFuncEntry(name);
+    if(ent){
+        // check type list consist
+        //DEBUG//printf("Check function call...\n");
+        if(check_typeList_consist(&ent->attr.param_list,pTypeList,true)){
+            // find return function type
+            ret_type = ent->type.v_type;
+            //DEBUG//printf("Table search : type '%s' for function '%s'\n",TYPE_NAME[ret_type],name);
         }
+        else{
+            // parameter mismatch
+            ret_type = T_ERROR;
+            errType = ENTRY_MISMATCH;
+        } 
     }
+    
+
     supressError = old_supress;
     char errmsg[MAX_STRING_SIZE];
     if(ret_type < 0){
@@ -1384,7 +1378,12 @@ funct_def : type scalar_id '(' args ')'  {
                                 // dims
                                 memcpy(pTarget->dims,pTypeList->data[i].dims,sizeof(pTarget->dims));
                             }
+                            /*
                             nextVarNum++; // var num is for parameter
+                            if(ent->type.v_type == T_DOUBLE){
+                                nextVarNum++; // one more for double
+                            }
+                            */
 
                         } 
                         // genrate function head Assembly
@@ -1409,6 +1408,11 @@ funct_def : type scalar_id '(' args ')'  {
                                 param->type.dim = pTypeList->data[i].dim;
                                 // copy dims
                                 memcpy(param->type.dims,pTypeList->data[i].dims,sizeof(param->type.dims));
+                                // paramNum fix
+                                if(param->type.v_type == T_DOUBLE){
+                                    ++paramVarNum;
+                                }
+
                             }
                             else{
                             
@@ -1416,6 +1420,7 @@ funct_def : type scalar_id '(' args ')'  {
                             }
                         }
                     }
+                    nextVarNum = paramVarNum;
                     
                 } compound_stat 
                 {
@@ -1885,9 +1890,10 @@ expr : expr '+' expr
 
 
 
-funct_call : scalar_id '(' zero_or_more_expr_list ')' {
+funct_call : scalar_id '(' {pushFuncCall($1);}  zero_or_more_expr_list ')' {
+                popFuncCall();
                 // check function consistency
-                int ret_type = check_function_call_consist($1,&$3);
+                int ret_type = check_function_call_consist($1,&$4);
                 if(ret_type>=0){
                     //DEBUG//printf("-->function with return type '%s'called\n",TYPE_NAME[ret_type]);  
                 }
@@ -1916,6 +1922,8 @@ expr_list : expr
                 // build from single expr
                 $$.end = 1;
                 $$.data[0] = $1;
+                // match expr coercion
+                asmGenFunctionCallCoercion(&$1);
             }
           | expr_list COMMA expr
             {
@@ -1924,6 +1932,8 @@ expr_list : expr
                 // concat list
                 $$.data[$$.end] = $3;
                 $$.end++;
+                // match expr coercion
+                asmGenFunctionCallCoercion(&$3);
             }
           ;
 
@@ -2029,6 +2039,24 @@ void init_table_stack(){
     push_table(TABLE_NORMAL);
 }
 
+
+void initFuncCallStk(){
+    funcCallStk.end = 0;
+}
+void pushFuncCall(const char* name){
+    s_table_entry* ent = findFuncEntry(name);
+    if(ent){
+        funcCall_t* ptr = &funcCallStk.data[funcCallStk.end++];
+        ptr->index = 0;
+        memcpy(&ptr->list,&ent->attr.param_list,sizeof(ptr->list));
+        //DEBUG//printf("new function call %s with end : %d\n",name,ptr->list.end);
+    }
+}
+void popFuncCall(){
+    --funcCallStk.end;
+}
+
+
 int yyerror( char *msg )
 {
   fprintf( stderr, "\n|--------------------------------------------------------------------------\n" );
@@ -2082,6 +2110,40 @@ void process_check_eof(){
     run_function_declare_definition_test();
 }
 
+s_table_entry* findFuncEntry(const char* name){ 
+    // search global table for function 
+    symbol_table* pTable = global_table();
+    for(int i=0;i<pTable->end;i++){
+        s_table_entry* ent = &pTable->entries[i];
+        // function kind only
+        if(ent->kind == K_FUNCTION){
+            // same name
+            if(strcmp(name,ent->name)==0){
+                return ent;
+            }
+        }
+    }
+    return NULL;
+}
+
+void asmGenFunctionCallCoercion(typeStruct_t* pType){
+    // only when function call stack is not empty
+    if(funcCallStk.end <= 0){
+        return;
+    }
+    // try to match current top
+    funcCall_t* pCall = &funcCallStk.data[funcCallStk.end-1];
+    // check out bound
+    //DEBUG//printf("Index : %d , End : %d\n",pCall->index,pCall->list.end);
+    if(pCall->index >= pCall->list.end){
+        return;
+    }
+    //DEBUG//printf("Generate function call coercion2\n");
+    typeStruct_t* pTarget = &pCall->list.data[pCall->index++];
+    int dstType = pTarget->v_type;
+    int srcType = pType->v_type;
+    asmGenCoercion(dstType,srcType);
+}
 
 void asmGenScanner(){ 
     fprintf(asmOut,"    new java/util/Scanner\n");
@@ -2819,7 +2881,7 @@ int  main( int argc, char **argv )
         init_table_stack(&stk);
         init_errorPool();
         initLabelMgmt(&labelM);
-    
+        initFuncCallStk();
 
         asmGenProgramHead();
 	yyin = fp;

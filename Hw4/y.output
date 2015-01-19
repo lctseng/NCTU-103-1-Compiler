@@ -201,21 +201,23 @@
   128     | funct_call
   129     | var_ref
 
-  130 funct_call: scalar_id '(' zero_or_more_expr_list ')'
+  130 $@17: %empty
 
-  131 zero_or_more_expr_list: expr_list
-  132                       | %empty
+  131 funct_call: scalar_id '(' $@17 zero_or_more_expr_list ')'
 
-  133 expr_list: expr
-  134          | expr_list COMMA expr
+  132 zero_or_more_expr_list: expr_list
+  133                       | %empty
+
+  134 expr_list: expr
+  135          | expr_list COMMA expr
 
 
 終結語詞，附有它們出現處的規則
 
 $end (0) 0
 '%' (37) 121
-'(' (40) 39 43 70 76 80 86 123 130
-')' (41) 39 43 70 76 80 86 123 130
+'(' (40) 39 43 70 76 80 86 123 131
+')' (41) 39 43 70 76 80 86 123 131
 '*' (42) 119
 '+' (43) 117
 '-' (45) 34 118 122
@@ -256,7 +258,7 @@ KW_IF (285) 70
 SEMICOLON (286) 12 30 39 68 80 86 95 96 97 98 100 102
 ID (287) 26
 ASSIGN (288) 24 25 33 34 92
-COMMA (289) 22 32 48 94 134
+COMMA (289) 22 32 48 94 135
 KW_PRINT (290) 100
 KW_READ (291) 102
 INTEGER_CONSTANT (292) 29 35
@@ -286,7 +288,7 @@ var_list (59)
 var_entry (60)
     於左側： 23 24 25,於右側： 21 22
 scalar_id (61)
-    於左側： 26,於右側： 19 20 24 25 33 34 39 43 103 104 130
+    於左側： 26,於右側： 19 20 24 25 33 34 39 43 103 104 131
 array_indice (62)
     於左側： 27 28,於右側： 20 25 27
 single_array_indice (63)
@@ -392,13 +394,15 @@ binary_logic_op (112)
 expr (113)
     於左側： 117 118 119 120 121 122 123 124 125 126 127 128 129,
    於右側： 24 89 92 95 100 107 108 117 118 119 120 121 122 123
-    124 125 126 133 134
+    124 125 126 134 135
 funct_call (114)
-    於左側： 130,於右側： 68 128
-zero_or_more_expr_list (115)
-    於左側： 131 132,於右側： 25 130
-expr_list (116)
-    於左側： 133 134,於右側： 131 134
+    於左側： 131,於右側： 68 128
+$@17 (115)
+    於左側： 130,於右側： 131
+zero_or_more_expr_list (116)
+    於左側： 132 133,於右側： 25 131
+expr_list (117)
+    於左側： 134 135,於右側： 132 135
 
 
 狀態 0
@@ -1043,7 +1047,7 @@ expr_list (116)
 
   103 var_ref: scalar_id .
   104        | scalar_id . intexpr_array_indice
-  130 funct_call: scalar_id . '(' zero_or_more_expr_list ')'
+  131 funct_call: scalar_id . '(' $@17 zero_or_more_expr_list ')'
 
     '('  偏移，並進入狀態 80
     '['  偏移，並進入狀態 81
@@ -1318,26 +1322,11 @@ expr_list (116)
 
 狀態 80
 
-  130 funct_call: scalar_id '(' . zero_or_more_expr_list ')'
+  131 funct_call: scalar_id '(' . $@17 zero_or_more_expr_list ')'
 
-    '('                偏移，並進入狀態 51
-    L_OP_NOT           偏移，並進入狀態 52
-    '-'                偏移，並進入狀態 53
-    ID                 偏移，並進入狀態 21
-    INTEGER_CONSTANT   偏移，並進入狀態 54
-    FLOATING_CONSTANT  偏移，並進入狀態 55
-    BOOLEAN_CONSTANT   偏移，並進入狀態 56
-    STRING_CONSTANT    偏移，並進入狀態 57
+    $預設  使用規則 130 以縮減 ($@17)
 
-    $預設  使用規則 132 以縮減 (zero_or_more_expr_list)
-
-    scalar_id               進入狀態 58
-    literal_constant        進入狀態 59
-    var_ref                 進入狀態 60
-    expr                    進入狀態 110
-    funct_call              進入狀態 62
-    zero_or_more_expr_list  進入狀態 111
-    expr_list               進入狀態 112
+    $@17  進入狀態 110
 
 
 狀態 81
@@ -1356,7 +1345,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 113
+    expr              進入狀態 111
     funct_call        進入狀態 62
 
 
@@ -1376,7 +1365,7 @@ expr_list (116)
 
     $預設  使用規則 106 以縮減 (intexpr_array_indice)
 
-    intexpr_array_indice         進入狀態 114
+    intexpr_array_indice         進入狀態 112
     intexpr_single_array_indice  進入狀態 83
 
 
@@ -1452,7 +1441,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 115
+    expr              進入狀態 113
     funct_call        進入狀態 62
 
 
@@ -1472,7 +1461,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 116
+    expr              進入狀態 114
     funct_call        進入狀態 62
 
 
@@ -1492,7 +1481,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 117
+    expr              進入狀態 115
     funct_call        進入狀態 62
 
 
@@ -1512,7 +1501,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 118
+    expr              進入狀態 116
     funct_call        進入狀態 62
 
 
@@ -1532,7 +1521,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 119
+    expr              進入狀態 117
     funct_call        進入狀態 62
 
 
@@ -1552,7 +1541,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 120
+    expr              進入狀態 118
     funct_call        進入狀態 62
 
 
@@ -1572,7 +1561,7 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 121
+    expr              進入狀態 119
     funct_call        進入狀態 62
 
 
@@ -1596,15 +1585,15 @@ expr_list (116)
     BOOLEAN_CONSTANT   偏移，並進入狀態 56
     STRING_CONSTANT    偏移，並進入狀態 57
 
-    $預設  使用規則 132 以縮減 (zero_or_more_expr_list)
+    $預設  使用規則 133 以縮減 (zero_or_more_expr_list)
 
     scalar_id               進入狀態 58
     literal_constant        進入狀態 59
     var_ref                 進入狀態 60
-    expr                    進入狀態 110
+    expr                    進入狀態 120
     funct_call              進入狀態 62
-    zero_or_more_expr_list  進入狀態 122
-    expr_list               進入狀態 112
+    zero_or_more_expr_list  進入狀態 121
+    expr_list               進入狀態 122
 
 
 狀態 101
@@ -1685,53 +1674,29 @@ expr_list (116)
 
 狀態 110
 
-  117 expr: expr . '+' expr
-  118     | expr . '-' expr
-  119     | expr . '*' expr
-  120     | expr . '/' expr
-  121     | expr . '%' expr
-  124     | expr . relation_op expr
-  125     | expr . binary_logic_op expr
-  133 expr_list: expr .
+  131 funct_call: scalar_id '(' $@17 . zero_or_more_expr_list ')'
 
-    L_OP_OR   偏移，並進入狀態 84
-    L_OP_AND  偏移，並進入狀態 85
-    L_OP_LT   偏移，並進入狀態 86
-    L_OP_LE   偏移，並進入狀態 87
-    L_OP_EQ   偏移，並進入狀態 88
-    L_OP_GE   偏移，並進入狀態 89
-    L_OP_GT   偏移，並進入狀態 90
-    L_OP_NE   偏移，並進入狀態 91
-    '+'       偏移，並進入狀態 92
-    '-'       偏移，並進入狀態 93
-    '*'       偏移，並進入狀態 94
-    '/'       偏移，並進入狀態 95
-    '%'       偏移，並進入狀態 96
+    '('                偏移，並進入狀態 51
+    L_OP_NOT           偏移，並進入狀態 52
+    '-'                偏移，並進入狀態 53
+    ID                 偏移，並進入狀態 21
+    INTEGER_CONSTANT   偏移，並進入狀態 54
+    FLOATING_CONSTANT  偏移，並進入狀態 55
+    BOOLEAN_CONSTANT   偏移，並進入狀態 56
+    STRING_CONSTANT    偏移，並進入狀態 57
 
-    $預設  使用規則 133 以縮減 (expr_list)
+    $預設  使用規則 133 以縮減 (zero_or_more_expr_list)
 
-    relation_op      進入狀態 97
-    binary_logic_op  進入狀態 98
+    scalar_id               進入狀態 58
+    literal_constant        進入狀態 59
+    var_ref                 進入狀態 60
+    expr                    進入狀態 120
+    funct_call              進入狀態 62
+    zero_or_more_expr_list  進入狀態 127
+    expr_list               進入狀態 122
 
 
 狀態 111
-
-  130 funct_call: scalar_id '(' zero_or_more_expr_list . ')'
-
-    ')'  偏移，並進入狀態 127
-
-
-狀態 112
-
-  131 zero_or_more_expr_list: expr_list .
-  134 expr_list: expr_list . COMMA expr
-
-    COMMA  偏移，並進入狀態 128
-
-    $預設  使用規則 131 以縮減 (zero_or_more_expr_list)
-
-
-狀態 113
 
   107 intexpr_single_array_indice: '[' expr . ']'
   117 expr: expr . '+' expr
@@ -1755,20 +1720,20 @@ expr_list (116)
     '*'       偏移，並進入狀態 94
     '/'       偏移，並進入狀態 95
     '%'       偏移，並進入狀態 96
-    ']'       偏移，並進入狀態 129
+    ']'       偏移，並進入狀態 128
 
     relation_op      進入狀態 97
     binary_logic_op  進入狀態 98
 
 
-狀態 114
+狀態 112
 
   105 intexpr_array_indice: intexpr_single_array_indice intexpr_array_indice .
 
     $預設  使用規則 105 以縮減 (intexpr_array_indice)
 
 
-狀態 115
+狀態 113
 
   117 expr: expr . '+' expr
   117     | expr '+' expr .
@@ -1789,7 +1754,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 116
+狀態 114
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -1810,7 +1775,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 117
+狀態 115
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -1827,7 +1792,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 118
+狀態 116
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -1844,7 +1809,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 119
+狀態 117
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -1861,7 +1826,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 120
+狀態 118
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -1891,7 +1856,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 121
+狀態 119
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -1920,11 +1885,52 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 122
+狀態 120
+
+  117 expr: expr . '+' expr
+  118     | expr . '-' expr
+  119     | expr . '*' expr
+  120     | expr . '/' expr
+  121     | expr . '%' expr
+  124     | expr . relation_op expr
+  125     | expr . binary_logic_op expr
+  134 expr_list: expr .
+
+    L_OP_OR   偏移，並進入狀態 84
+    L_OP_AND  偏移，並進入狀態 85
+    L_OP_LT   偏移，並進入狀態 86
+    L_OP_LE   偏移，並進入狀態 87
+    L_OP_EQ   偏移，並進入狀態 88
+    L_OP_GE   偏移，並進入狀態 89
+    L_OP_GT   偏移，並進入狀態 90
+    L_OP_NE   偏移，並進入狀態 91
+    '+'       偏移，並進入狀態 92
+    '-'       偏移，並進入狀態 93
+    '*'       偏移，並進入狀態 94
+    '/'       偏移，並進入狀態 95
+    '%'       偏移，並進入狀態 96
+
+    $預設  使用規則 134 以縮減 (expr_list)
+
+    relation_op      進入狀態 97
+    binary_logic_op  進入狀態 98
+
+
+狀態 121
 
    25 var_entry: scalar_id array_indice ASSIGN '{' zero_or_more_expr_list . '}'
 
-    '}'  偏移，並進入狀態 130
+    '}'  偏移，並進入狀態 129
+
+
+狀態 122
+
+  132 zero_or_more_expr_list: expr_list .
+  135 expr_list: expr_list . COMMA expr
+
+    COMMA  偏移，並進入狀態 130
+
+    $預設  使用規則 132 以縮減 (zero_or_more_expr_list)
 
 
 狀態 123
@@ -1985,14 +1991,28 @@ expr_list (116)
 
 狀態 127
 
-  130 funct_call: scalar_id '(' zero_or_more_expr_list ')' .
+  131 funct_call: scalar_id '(' $@17 zero_or_more_expr_list . ')'
 
-    $預設  使用規則 130 以縮減 (funct_call)
+    ')'  偏移，並進入狀態 134
 
 
 狀態 128
 
-  134 expr_list: expr_list COMMA . expr
+  107 intexpr_single_array_indice: '[' expr ']' .
+
+    $預設  使用規則 107 以縮減 (intexpr_single_array_indice)
+
+
+狀態 129
+
+   25 var_entry: scalar_id array_indice ASSIGN '{' zero_or_more_expr_list '}' .
+
+    $預設  使用規則 25 以縮減 (var_entry)
+
+
+狀態 130
+
+  135 expr_list: expr_list COMMA . expr
 
     '('                偏移，並進入狀態 51
     L_OP_NOT           偏移，並進入狀態 52
@@ -2006,36 +2026,22 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 134
+    expr              進入狀態 135
     funct_call        進入狀態 62
-
-
-狀態 129
-
-  107 intexpr_single_array_indice: '[' expr ']' .
-
-    $預設  使用規則 107 以縮減 (intexpr_single_array_indice)
-
-
-狀態 130
-
-   25 var_entry: scalar_id array_indice ASSIGN '{' zero_or_more_expr_list '}' .
-
-    $預設  使用規則 25 以縮減 (var_entry)
 
 
 狀態 131
 
    39 funct_decl: type scalar_id '(' args . ')' SEMICOLON
 
-    ')'  偏移，並進入狀態 135
+    ')'  偏移，並進入狀態 136
 
 
 狀態 132
 
    43 funct_def: type scalar_id '(' args . ')' $@1 compound_stat
 
-    ')'  偏移，並進入狀態 136
+    ')'  偏移，並進入狀態 137
 
 
 狀態 133
@@ -2052,15 +2058,22 @@ expr_list (116)
 
     $預設  使用規則 53 以縮減 (local_decl_list)
 
-    var_decl         進入狀態 137
-    type             進入狀態 138
-    const_decl       進入狀態 139
-    local_decl_list  進入狀態 140
-    var_decl_list    進入狀態 141
-    var_decl_entry   進入狀態 142
+    var_decl         進入狀態 138
+    type             進入狀態 139
+    const_decl       進入狀態 140
+    local_decl_list  進入狀態 141
+    var_decl_list    進入狀態 142
+    var_decl_entry   進入狀態 143
 
 
 狀態 134
+
+  131 funct_call: scalar_id '(' $@17 zero_or_more_expr_list ')' .
+
+    $預設  使用規則 131 以縮減 (funct_call)
+
+
+狀態 135
 
   117 expr: expr . '+' expr
   118     | expr . '-' expr
@@ -2069,7 +2082,7 @@ expr_list (116)
   121     | expr . '%' expr
   124     | expr . relation_op expr
   125     | expr . binary_logic_op expr
-  134 expr_list: expr_list COMMA expr .
+  135 expr_list: expr_list COMMA expr .
 
     L_OP_OR   偏移，並進入狀態 84
     L_OP_AND  偏移，並進入狀態 85
@@ -2085,20 +2098,20 @@ expr_list (116)
     '/'       偏移，並進入狀態 95
     '%'       偏移，並進入狀態 96
 
-    $預設  使用規則 134 以縮減 (expr_list)
+    $預設  使用規則 135 以縮減 (expr_list)
 
     relation_op      進入狀態 97
     binary_logic_op  進入狀態 98
 
 
-狀態 135
+狀態 136
 
    39 funct_decl: type scalar_id '(' args ')' . SEMICOLON
 
     SEMICOLON  偏移，並進入狀態 106
 
 
-狀態 136
+狀態 137
 
    43 funct_def: type scalar_id '(' args ')' . $@1 compound_stat
 
@@ -2107,14 +2120,14 @@ expr_list (116)
     $@1  進入狀態 107
 
 
-狀態 137
+狀態 138
 
    56 var_decl_entry: var_decl .
 
     $預設  使用規則 56 以縮減 (var_decl_entry)
 
 
-狀態 138
+狀態 139
 
    12 var_decl: type . var_list SEMICOLON
 
@@ -2126,54 +2139,54 @@ expr_list (116)
     scalar_id   進入狀態 45
 
 
-狀態 139
+狀態 140
 
    57 var_decl_entry: const_decl .
 
     $預設  使用規則 57 以縮減 (var_decl_entry)
 
 
-狀態 140
+狀態 141
 
    51 compound_stat: '{' $@2 local_decl_list . zero_or_more_stat_list '}'
 
-    KW_RETURN    偏移，並進入狀態 143
-    KW_BREAK     偏移，並進入狀態 144
-    KW_CONTINUE  偏移，並進入狀態 145
-    KW_FOR       偏移，並進入狀態 146
-    KW_WHILE     偏移，並進入狀態 147
-    KW_DO        偏移，並進入狀態 148
-    KW_IF        偏移，並進入狀態 149
+    KW_RETURN    偏移，並進入狀態 144
+    KW_BREAK     偏移，並進入狀態 145
+    KW_CONTINUE  偏移，並進入狀態 146
+    KW_FOR       偏移，並進入狀態 147
+    KW_WHILE     偏移，並進入狀態 148
+    KW_DO        偏移，並進入狀態 149
+    KW_IF        偏移，並進入狀態 150
     ID           偏移，並進入狀態 21
-    KW_PRINT     偏移，並進入狀態 150
-    KW_READ      偏移，並進入狀態 151
+    KW_PRINT     偏移，並進入狀態 151
+    KW_READ      偏移，並進入狀態 152
     '{'          偏移，並進入狀態 125
 
     $預設  使用規則 59 以縮減 (zero_or_more_stat_list)
 
     scalar_id               進入狀態 58
-    compound_stat           進入狀態 152
-    zero_or_more_stat_list  進入狀態 153
-    stat_list               進入狀態 154
-    stat                    進入狀態 155
-    if_stat                 進入狀態 156
-    while_stat              進入狀態 157
-    for_stat                進入狀態 158
-    single_assginment       進入狀態 159
-    jump_stat               進入狀態 160
-    simple_stat             進入狀態 161
-    var_ref                 進入狀態 162
-    funct_call              進入狀態 163
+    compound_stat           進入狀態 153
+    zero_or_more_stat_list  進入狀態 154
+    stat_list               進入狀態 155
+    stat                    進入狀態 156
+    if_stat                 進入狀態 157
+    while_stat              進入狀態 158
+    for_stat                進入狀態 159
+    single_assginment       進入狀態 160
+    jump_stat               進入狀態 161
+    simple_stat             進入狀態 162
+    var_ref                 進入狀態 163
+    funct_call              進入狀態 164
 
 
-狀態 141
+狀態 142
 
    52 local_decl_list: var_decl_list .
 
     $預設  使用規則 52 以縮減 (local_decl_list)
 
 
-狀態 142
+狀態 143
 
    54 var_decl_list: var_decl_entry . var_decl_list
    55              | var_decl_entry .
@@ -2188,14 +2201,14 @@ expr_list (116)
 
     $預設  使用規則 55 以縮減 (var_decl_list)
 
-    var_decl        進入狀態 137
-    type            進入狀態 138
-    const_decl      進入狀態 139
-    var_decl_list   進入狀態 164
-    var_decl_entry  進入狀態 142
+    var_decl        進入狀態 138
+    type            進入狀態 139
+    const_decl      進入狀態 140
+    var_decl_list   進入狀態 165
+    var_decl_entry  進入狀態 143
 
 
-狀態 143
+狀態 144
 
    95 jump_stat: KW_RETURN . expr SEMICOLON
 
@@ -2211,193 +2224,193 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 165
+    expr              進入狀態 166
     funct_call        進入狀態 62
-
-
-狀態 144
-
-   96 jump_stat: KW_BREAK . SEMICOLON
-
-    SEMICOLON  偏移，並進入狀態 166
 
 
 狀態 145
 
-   97 jump_stat: KW_CONTINUE . SEMICOLON
+   96 jump_stat: KW_BREAK . SEMICOLON
 
     SEMICOLON  偏移，並進入狀態 167
 
 
 狀態 146
 
+   97 jump_stat: KW_CONTINUE . SEMICOLON
+
+    SEMICOLON  偏移，並進入狀態 168
+
+
+狀態 147
+
    86 for_stat: KW_FOR . $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
 
     $預設  使用規則 81 以縮減 ($@10)
 
-    $@10  進入狀態 168
+    $@10  進入狀態 169
 
 
-狀態 147
+狀態 148
 
    76 while_stat: KW_WHILE . $@5 '(' bool_expr ')' $@6 compound_stat
 
     $預設  使用規則 74 以縮減 ($@5)
 
-    $@5  進入狀態 169
+    $@5  進入狀態 170
 
 
-狀態 148
+狀態 149
 
    80 while_stat: KW_DO . $@7 compound_stat KW_WHILE '(' $@8 bool_expr ')' $@9 SEMICOLON
 
     $預設  使用規則 77 以縮減 ($@7)
 
-    $@7  進入狀態 170
-
-
-狀態 149
-
-   70 if_stat: KW_IF . '(' bool_expr ')' $@3 compound_stat else_part
-
-    '('  偏移，並進入狀態 171
+    $@7  進入狀態 171
 
 
 狀態 150
+
+   70 if_stat: KW_IF . '(' bool_expr ')' $@3 compound_stat else_part
+
+    '('  偏移，並進入狀態 172
+
+
+狀態 151
 
   100 simple_stat: KW_PRINT . $@15 expr SEMICOLON
 
     $預設  使用規則 99 以縮減 ($@15)
 
-    $@15  進入狀態 172
+    $@15  進入狀態 173
 
 
-狀態 151
+狀態 152
 
   102 simple_stat: KW_READ . $@16 var_ref SEMICOLON
 
     $預設  使用規則 101 以縮減 ($@16)
 
-    $@16  進入狀態 173
+    $@16  進入狀態 174
 
 
-狀態 152
+狀態 153
 
    62 stat: compound_stat .
 
     $預設  使用規則 62 以縮減 (stat)
 
 
-狀態 153
+狀態 154
 
    51 compound_stat: '{' $@2 local_decl_list zero_or_more_stat_list . '}'
 
-    '}'  偏移，並進入狀態 174
+    '}'  偏移，並進入狀態 175
 
 
-狀態 154
+狀態 155
 
    58 zero_or_more_stat_list: stat_list .
    60 stat_list: stat_list . stat
 
-    KW_RETURN    偏移，並進入狀態 143
-    KW_BREAK     偏移，並進入狀態 144
-    KW_CONTINUE  偏移，並進入狀態 145
-    KW_FOR       偏移，並進入狀態 146
-    KW_WHILE     偏移，並進入狀態 147
-    KW_DO        偏移，並進入狀態 148
-    KW_IF        偏移，並進入狀態 149
+    KW_RETURN    偏移，並進入狀態 144
+    KW_BREAK     偏移，並進入狀態 145
+    KW_CONTINUE  偏移，並進入狀態 146
+    KW_FOR       偏移，並進入狀態 147
+    KW_WHILE     偏移，並進入狀態 148
+    KW_DO        偏移，並進入狀態 149
+    KW_IF        偏移，並進入狀態 150
     ID           偏移，並進入狀態 21
-    KW_PRINT     偏移，並進入狀態 150
-    KW_READ      偏移，並進入狀態 151
+    KW_PRINT     偏移，並進入狀態 151
+    KW_READ      偏移，並進入狀態 152
     '{'          偏移，並進入狀態 125
 
     $預設  使用規則 58 以縮減 (zero_or_more_stat_list)
 
     scalar_id          進入狀態 58
-    compound_stat      進入狀態 152
-    stat               進入狀態 175
-    if_stat            進入狀態 156
-    while_stat         進入狀態 157
-    for_stat           進入狀態 158
-    single_assginment  進入狀態 159
-    jump_stat          進入狀態 160
-    simple_stat        進入狀態 161
-    var_ref            進入狀態 162
-    funct_call         進入狀態 163
+    compound_stat      進入狀態 153
+    stat               進入狀態 176
+    if_stat            進入狀態 157
+    while_stat         進入狀態 158
+    for_stat           進入狀態 159
+    single_assginment  進入狀態 160
+    jump_stat          進入狀態 161
+    simple_stat        進入狀態 162
+    var_ref            進入狀態 163
+    funct_call         進入狀態 164
 
 
-狀態 155
+狀態 156
 
    61 stat_list: stat .
 
     $預設  使用規則 61 以縮減 (stat_list)
 
 
-狀態 156
+狀態 157
 
    64 stat: if_stat .
 
     $預設  使用規則 64 以縮減 (stat)
 
 
-狀態 157
+狀態 158
 
    65 stat: while_stat .
 
     $預設  使用規則 65 以縮減 (stat)
 
 
-狀態 158
+狀態 159
 
    66 stat: for_stat .
 
     $預設  使用規則 66 以縮減 (stat)
 
 
-狀態 159
+狀態 160
 
    98 simple_stat: single_assginment . SEMICOLON
 
-    SEMICOLON  偏移，並進入狀態 176
+    SEMICOLON  偏移，並進入狀態 177
 
 
-狀態 160
+狀態 161
 
    67 stat: jump_stat .
 
     $預設  使用規則 67 以縮減 (stat)
 
 
-狀態 161
+狀態 162
 
    63 stat: simple_stat .
 
     $預設  使用規則 63 以縮減 (stat)
 
 
-狀態 162
+狀態 163
 
    92 single_assginment: var_ref . ASSIGN expr
 
-    ASSIGN  偏移，並進入狀態 177
-
-
-狀態 163
-
-   68 stat: funct_call . SEMICOLON
-
-    SEMICOLON  偏移，並進入狀態 178
+    ASSIGN  偏移，並進入狀態 178
 
 
 狀態 164
+
+   68 stat: funct_call . SEMICOLON
+
+    SEMICOLON  偏移，並進入狀態 179
+
+
+狀態 165
 
    54 var_decl_list: var_decl_entry var_decl_list .
 
     $預設  使用規則 54 以縮減 (var_decl_list)
 
 
-狀態 165
+狀態 166
 
    95 jump_stat: KW_RETURN expr . SEMICOLON
   117 expr: expr . '+' expr
@@ -2421,50 +2434,50 @@ expr_list (116)
     '*'        偏移，並進入狀態 94
     '/'        偏移，並進入狀態 95
     '%'        偏移，並進入狀態 96
-    SEMICOLON  偏移，並進入狀態 179
+    SEMICOLON  偏移，並進入狀態 180
 
     relation_op      進入狀態 97
     binary_logic_op  進入狀態 98
 
 
-狀態 166
+狀態 167
 
    96 jump_stat: KW_BREAK SEMICOLON .
 
     $預設  使用規則 96 以縮減 (jump_stat)
 
 
-狀態 167
+狀態 168
 
    97 jump_stat: KW_CONTINUE SEMICOLON .
 
     $預設  使用規則 97 以縮減 (jump_stat)
 
 
-狀態 168
-
-   86 for_stat: KW_FOR $@10 . '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
-
-    '('  偏移，並進入狀態 180
-
-
 狀態 169
 
-   76 while_stat: KW_WHILE $@5 . '(' bool_expr ')' $@6 compound_stat
+   86 for_stat: KW_FOR $@10 . '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
 
     '('  偏移，並進入狀態 181
 
 
 狀態 170
 
+   76 while_stat: KW_WHILE $@5 . '(' bool_expr ')' $@6 compound_stat
+
+    '('  偏移，並進入狀態 182
+
+
+狀態 171
+
    80 while_stat: KW_DO $@7 . compound_stat KW_WHILE '(' $@8 bool_expr ')' $@9 SEMICOLON
 
     '{'  偏移，並進入狀態 125
 
-    compound_stat  進入狀態 182
+    compound_stat  進入狀態 183
 
 
-狀態 171
+狀態 172
 
    70 if_stat: KW_IF '(' . bool_expr ')' $@3 compound_stat else_part
 
@@ -2480,12 +2493,12 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    bool_expr         進入狀態 183
-    expr              進入狀態 184
+    bool_expr         進入狀態 184
+    expr              進入狀態 185
     funct_call        進入狀態 62
 
 
-狀態 172
+狀態 173
 
   100 simple_stat: KW_PRINT $@15 . expr SEMICOLON
 
@@ -2501,42 +2514,42 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 185
+    expr              進入狀態 186
     funct_call        進入狀態 62
 
 
-狀態 173
+狀態 174
 
   102 simple_stat: KW_READ $@16 . var_ref SEMICOLON
 
     ID  偏移，並進入狀態 21
 
-    scalar_id  進入狀態 186
-    var_ref    進入狀態 187
+    scalar_id  進入狀態 187
+    var_ref    進入狀態 188
 
 
-狀態 174
+狀態 175
 
    51 compound_stat: '{' $@2 local_decl_list zero_or_more_stat_list '}' .
 
     $預設  使用規則 51 以縮減 (compound_stat)
 
 
-狀態 175
+狀態 176
 
    60 stat_list: stat_list stat .
 
     $預設  使用規則 60 以縮減 (stat_list)
 
 
-狀態 176
+狀態 177
 
    98 simple_stat: single_assginment SEMICOLON .
 
     $預設  使用規則 98 以縮減 (simple_stat)
 
 
-狀態 177
+狀態 178
 
    92 single_assginment: var_ref ASSIGN . expr
 
@@ -2552,25 +2565,25 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    expr              進入狀態 188
+    expr              進入狀態 189
     funct_call        進入狀態 62
 
 
-狀態 178
+狀態 179
 
    68 stat: funct_call SEMICOLON .
 
     $預設  使用規則 68 以縮減 (stat)
 
 
-狀態 179
+狀態 180
 
    95 jump_stat: KW_RETURN expr SEMICOLON .
 
     $預設  使用規則 95 以縮減 (jump_stat)
 
 
-狀態 180
+狀態 181
 
    86 for_stat: KW_FOR $@10 '(' . for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
 
@@ -2587,15 +2600,15 @@ expr_list (116)
 
     scalar_id                   進入狀態 58
     literal_constant            進入狀態 59
-    for_expr                    進入狀態 189
-    single_assginment           進入狀態 190
-    one_or_more_for_assignment  進入狀態 191
-    var_ref                     進入狀態 192
-    expr                        進入狀態 193
+    for_expr                    進入狀態 190
+    single_assginment           進入狀態 191
+    one_or_more_for_assignment  進入狀態 192
+    var_ref                     進入狀態 193
+    expr                        進入狀態 194
     funct_call                  進入狀態 62
 
 
-狀態 181
+狀態 182
 
    76 while_stat: KW_WHILE $@5 '(' . bool_expr ')' $@6 compound_stat
 
@@ -2611,26 +2624,26 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    bool_expr         進入狀態 194
-    expr              進入狀態 184
+    bool_expr         進入狀態 195
+    expr              進入狀態 185
     funct_call        進入狀態 62
-
-
-狀態 182
-
-   80 while_stat: KW_DO $@7 compound_stat . KW_WHILE '(' $@8 bool_expr ')' $@9 SEMICOLON
-
-    KW_WHILE  偏移，並進入狀態 195
 
 
 狀態 183
 
-   70 if_stat: KW_IF '(' bool_expr . ')' $@3 compound_stat else_part
+   80 while_stat: KW_DO $@7 compound_stat . KW_WHILE '(' $@8 bool_expr ')' $@9 SEMICOLON
 
-    ')'  偏移，並進入狀態 196
+    KW_WHILE  偏移，並進入狀態 196
 
 
 狀態 184
+
+   70 if_stat: KW_IF '(' bool_expr . ')' $@3 compound_stat else_part
+
+    ')'  偏移，並進入狀態 197
+
+
+狀態 185
 
   108 bool_expr: expr .
   117 expr: expr . '+' expr
@@ -2661,7 +2674,7 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 185
+狀態 186
 
   100 simple_stat: KW_PRINT $@15 expr . SEMICOLON
   117 expr: expr . '+' expr
@@ -2685,13 +2698,13 @@ expr_list (116)
     '*'        偏移，並進入狀態 94
     '/'        偏移，並進入狀態 95
     '%'        偏移，並進入狀態 96
-    SEMICOLON  偏移，並進入狀態 197
+    SEMICOLON  偏移，並進入狀態 198
 
     relation_op      進入狀態 97
     binary_logic_op  進入狀態 98
 
 
-狀態 186
+狀態 187
 
   103 var_ref: scalar_id .
   104        | scalar_id . intexpr_array_indice
@@ -2704,14 +2717,14 @@ expr_list (116)
     intexpr_single_array_indice  進入狀態 83
 
 
-狀態 187
+狀態 188
 
   102 simple_stat: KW_READ $@16 var_ref . SEMICOLON
 
-    SEMICOLON  偏移，並進入狀態 198
+    SEMICOLON  偏移，並進入狀態 199
 
 
-狀態 188
+狀態 189
 
    92 single_assginment: var_ref ASSIGN expr .
   117 expr: expr . '+' expr
@@ -2742,41 +2755,41 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 189
+狀態 190
 
    86 for_stat: KW_FOR $@10 '(' for_expr . SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
 
-    SEMICOLON  偏移，並進入狀態 199
+    SEMICOLON  偏移，並進入狀態 200
 
 
-狀態 190
+狀態 191
 
    93 one_or_more_for_assignment: single_assginment .
 
     $預設  使用規則 93 以縮減 (one_or_more_for_assignment)
 
 
-狀態 191
+狀態 192
 
    90 for_expr: one_or_more_for_assignment .
    94 one_or_more_for_assignment: one_or_more_for_assignment . COMMA single_assginment
 
-    COMMA  偏移，並進入狀態 200
+    COMMA  偏移，並進入狀態 201
 
     $預設  使用規則 90 以縮減 (for_expr)
 
 
-狀態 192
+狀態 193
 
    92 single_assginment: var_ref . ASSIGN expr
   129 expr: var_ref .
 
-    ASSIGN  偏移，並進入狀態 177
+    ASSIGN  偏移，並進入狀態 178
 
     $預設  使用規則 129 以縮減 (expr)
 
 
-狀態 193
+狀態 194
 
    89 for_expr: expr .
   117 expr: expr . '+' expr
@@ -2807,91 +2820,91 @@ expr_list (116)
     binary_logic_op  進入狀態 98
 
 
-狀態 194
+狀態 195
 
    76 while_stat: KW_WHILE $@5 '(' bool_expr . ')' $@6 compound_stat
 
-    ')'  偏移，並進入狀態 201
-
-
-狀態 195
-
-   80 while_stat: KW_DO $@7 compound_stat KW_WHILE . '(' $@8 bool_expr ')' $@9 SEMICOLON
-
-    '('  偏移，並進入狀態 202
+    ')'  偏移，並進入狀態 202
 
 
 狀態 196
+
+   80 while_stat: KW_DO $@7 compound_stat KW_WHILE . '(' $@8 bool_expr ')' $@9 SEMICOLON
+
+    '('  偏移，並進入狀態 203
+
+
+狀態 197
 
    70 if_stat: KW_IF '(' bool_expr ')' . $@3 compound_stat else_part
 
     $預設  使用規則 69 以縮減 ($@3)
 
-    $@3  進入狀態 203
+    $@3  進入狀態 204
 
 
-狀態 197
+狀態 198
 
   100 simple_stat: KW_PRINT $@15 expr SEMICOLON .
 
     $預設  使用規則 100 以縮減 (simple_stat)
 
 
-狀態 198
+狀態 199
 
   102 simple_stat: KW_READ $@16 var_ref SEMICOLON .
 
     $預設  使用規則 102 以縮減 (simple_stat)
 
 
-狀態 199
+狀態 200
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON . $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
 
     $預設  使用規則 82 以縮減 ($@11)
 
-    $@11  進入狀態 204
+    $@11  進入狀態 205
 
 
-狀態 200
+狀態 201
 
    94 one_or_more_for_assignment: one_or_more_for_assignment COMMA . single_assginment
 
     ID  偏移，並進入狀態 21
 
-    scalar_id          進入狀態 186
-    single_assginment  進入狀態 205
-    var_ref            進入狀態 162
+    scalar_id          進入狀態 187
+    single_assginment  進入狀態 206
+    var_ref            進入狀態 163
 
 
-狀態 201
+狀態 202
 
    76 while_stat: KW_WHILE $@5 '(' bool_expr ')' . $@6 compound_stat
 
     $預設  使用規則 75 以縮減 ($@6)
 
-    $@6  進入狀態 206
+    $@6  進入狀態 207
 
 
-狀態 202
+狀態 203
 
    80 while_stat: KW_DO $@7 compound_stat KW_WHILE '(' . $@8 bool_expr ')' $@9 SEMICOLON
 
     $預設  使用規則 78 以縮減 ($@8)
 
-    $@8  進入狀態 207
+    $@8  進入狀態 208
 
 
-狀態 203
+狀態 204
 
    70 if_stat: KW_IF '(' bool_expr ')' $@3 . compound_stat else_part
 
     '{'  偏移，並進入狀態 125
 
-    compound_stat  進入狀態 208
+    compound_stat  進入狀態 209
 
 
-狀態 204
+狀態 205
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 . for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
 
@@ -2908,30 +2921,30 @@ expr_list (116)
 
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
-    for_bool_expr     進入狀態 209
+    for_bool_expr     進入狀態 210
     var_ref           進入狀態 60
-    bool_expr         進入狀態 210
-    expr              進入狀態 184
+    bool_expr         進入狀態 211
+    expr              進入狀態 185
     funct_call        進入狀態 62
 
 
-狀態 205
+狀態 206
 
    94 one_or_more_for_assignment: one_or_more_for_assignment COMMA single_assginment .
 
     $預設  使用規則 94 以縮減 (one_or_more_for_assignment)
 
 
-狀態 206
+狀態 207
 
    76 while_stat: KW_WHILE $@5 '(' bool_expr ')' $@6 . compound_stat
 
     '{'  偏移，並進入狀態 125
 
-    compound_stat  進入狀態 211
+    compound_stat  進入狀態 212
 
 
-狀態 207
+狀態 208
 
    80 while_stat: KW_DO $@7 compound_stat KW_WHILE '(' $@8 . bool_expr ')' $@9 SEMICOLON
 
@@ -2947,94 +2960,94 @@ expr_list (116)
     scalar_id         進入狀態 58
     literal_constant  進入狀態 59
     var_ref           進入狀態 60
-    bool_expr         進入狀態 212
-    expr              進入狀態 184
+    bool_expr         進入狀態 213
+    expr              進入狀態 185
     funct_call        進入狀態 62
-
-
-狀態 208
-
-   70 if_stat: KW_IF '(' bool_expr ')' $@3 compound_stat . else_part
-
-    KW_ELSE  偏移，並進入狀態 213
-
-    $預設  使用規則 73 以縮減 (else_part)
-
-    else_part  進入狀態 214
 
 
 狀態 209
 
-   86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr . SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
+   70 if_stat: KW_IF '(' bool_expr ')' $@3 compound_stat . else_part
 
-    SEMICOLON  偏移，並進入狀態 215
+    KW_ELSE  偏移，並進入狀態 214
+
+    $預設  使用規則 73 以縮減 (else_part)
+
+    else_part  進入狀態 215
 
 
 狀態 210
+
+   86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr . SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat
+
+    SEMICOLON  偏移，並進入狀態 216
+
+
+狀態 211
 
    87 for_bool_expr: bool_expr .
 
     $預設  使用規則 87 以縮減 (for_bool_expr)
 
 
-狀態 211
+狀態 212
 
    76 while_stat: KW_WHILE $@5 '(' bool_expr ')' $@6 compound_stat .
 
     $預設  使用規則 76 以縮減 (while_stat)
 
 
-狀態 212
+狀態 213
 
    80 while_stat: KW_DO $@7 compound_stat KW_WHILE '(' $@8 bool_expr . ')' $@9 SEMICOLON
 
-    ')'  偏移，並進入狀態 216
+    ')'  偏移，並進入狀態 217
 
 
-狀態 213
+狀態 214
 
    72 else_part: KW_ELSE . $@4 compound_stat
 
     $預設  使用規則 71 以縮減 ($@4)
 
-    $@4  進入狀態 217
+    $@4  進入狀態 218
 
 
-狀態 214
+狀態 215
 
    70 if_stat: KW_IF '(' bool_expr ')' $@3 compound_stat else_part .
 
     $預設  使用規則 70 以縮減 (if_stat)
 
 
-狀態 215
+狀態 216
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON . $@12 for_expr $@13 ')' $@14 compound_stat
 
     $預設  使用規則 83 以縮減 ($@12)
 
-    $@12  進入狀態 218
+    $@12  進入狀態 219
 
 
-狀態 216
+狀態 217
 
    80 while_stat: KW_DO $@7 compound_stat KW_WHILE '(' $@8 bool_expr ')' . $@9 SEMICOLON
 
     $預設  使用規則 79 以縮減 ($@9)
 
-    $@9  進入狀態 219
+    $@9  進入狀態 220
 
 
-狀態 217
+狀態 218
 
    72 else_part: KW_ELSE $@4 . compound_stat
 
     '{'  偏移，並進入狀態 125
 
-    compound_stat  進入狀態 220
+    compound_stat  進入狀態 221
 
 
-狀態 218
+狀態 219
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 . for_expr $@13 ')' $@14 compound_stat
 
@@ -3051,70 +3064,70 @@ expr_list (116)
 
     scalar_id                   進入狀態 58
     literal_constant            進入狀態 59
-    for_expr                    進入狀態 221
-    single_assginment           進入狀態 190
-    one_or_more_for_assignment  進入狀態 191
-    var_ref                     進入狀態 192
-    expr                        進入狀態 193
+    for_expr                    進入狀態 222
+    single_assginment           進入狀態 191
+    one_or_more_for_assignment  進入狀態 192
+    var_ref                     進入狀態 193
+    expr                        進入狀態 194
     funct_call                  進入狀態 62
 
 
-狀態 219
+狀態 220
 
    80 while_stat: KW_DO $@7 compound_stat KW_WHILE '(' $@8 bool_expr ')' $@9 . SEMICOLON
 
-    SEMICOLON  偏移，並進入狀態 222
+    SEMICOLON  偏移，並進入狀態 223
 
 
-狀態 220
+狀態 221
 
    72 else_part: KW_ELSE $@4 compound_stat .
 
     $預設  使用規則 72 以縮減 (else_part)
 
 
-狀態 221
+狀態 222
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr . $@13 ')' $@14 compound_stat
 
     $預設  使用規則 84 以縮減 ($@13)
 
-    $@13  進入狀態 223
+    $@13  進入狀態 224
 
 
-狀態 222
+狀態 223
 
    80 while_stat: KW_DO $@7 compound_stat KW_WHILE '(' $@8 bool_expr ')' $@9 SEMICOLON .
 
     $預設  使用規則 80 以縮減 (while_stat)
 
 
-狀態 223
+狀態 224
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 . ')' $@14 compound_stat
 
-    ')'  偏移，並進入狀態 224
+    ')'  偏移，並進入狀態 225
 
 
-狀態 224
+狀態 225
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' . $@14 compound_stat
 
     $預設  使用規則 85 以縮減 ($@14)
 
-    $@14  進入狀態 225
+    $@14  進入狀態 226
 
 
-狀態 225
+狀態 226
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 . compound_stat
 
     '{'  偏移，並進入狀態 125
 
-    compound_stat  進入狀態 226
+    compound_stat  進入狀態 227
 
 
-狀態 226
+狀態 227
 
    86 for_stat: KW_FOR $@10 '(' for_expr SEMICOLON $@11 for_bool_expr SEMICOLON $@12 for_expr $@13 ')' $@14 compound_stat .
 
