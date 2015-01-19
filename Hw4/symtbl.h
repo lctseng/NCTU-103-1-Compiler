@@ -19,6 +19,7 @@
 #define MAX_JAVA_LOCAL 110 
 #define MAX_LABEL_STACK 1024
 #define MAX_FUNCTION_CALL 100
+#define MAX_GLOBAL_QUEUE_LENGTH 9126
 
 #define VN_START (MAX_JAVA_LOCAL - 10)
 #define VN_TMP1 (VN_START + 1)
@@ -207,6 +208,8 @@ void pushFuncCall(const char* name);
 void popFuncCall();
 
 //*** assembly related ***//
+void asmQueueGlobal(const char* str);
+void asmGlobalWrapper(const char* str);
 void asmGenProgramHead();
 void asmGenScanner();
 void asmGenFunctionHead(const char* name);

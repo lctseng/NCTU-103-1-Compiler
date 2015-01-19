@@ -32,7 +32,8 @@ int lastStmtType = STMT_ERROR; // last stmt type, for 'return check'
 int greaterType = T_ERROR; // store greater type if needed
 int loopTypeTmp = LOOP_NONE;
 int paramVarNum = 0;
-
+// global initialize queue
+char globalQueStr[MAX_GLOBAL_QUEUE_LENGTH];  
 
 // label mgmt
 labelMgmt_t labelM;
@@ -2686,6 +2687,9 @@ void asmGenFunctionHead(const char* name){
                 // main function process
                 if(mainDef){
                     asmGenScanner();
+                    // release global queue
+                    fprintf(asmOut,globalQueStr);
+                    globalQueStr[0] = '\0';
                 }
                 break;
 
@@ -2742,6 +2746,8 @@ void asmGenReadTail(typeStruct_t* pType){
 
 }
 void asmGenCoercion(int dstType,int srcType){
+    char buf[MAX_STRING_SIZE];
+    bzero(buf,MAX_STRING_SIZE);
     if(dstType != srcType){
         //DEBUG//printf("[ASM] Coercion from %s to %s\n",TYPE_NAME[srcType],TYPE_NAME[dstType]);
     }
@@ -2750,42 +2756,50 @@ void asmGenCoercion(int dstType,int srcType){
     case T_FLOAT:
         if(srcType == T_INT){
             // INT to FLOAT
-            fprintf(asmOut,"    i2f\n");
+            snprintf(buf,MAX_STRING_SIZE,"    i2f\n");
         }
         break;
     case T_DOUBLE:
         switch(srcType){
         case T_INT:
             // INT to DOUBLE
-            fprintf(asmOut,"    i2d\n");
+            snprintf(buf,MAX_STRING_SIZE,"    i2d\n");
             break;
         case T_FLOAT:
             // FLOAT to DOUBLE
-            fprintf(asmOut,"    f2d\n");
+            snprintf(buf,MAX_STRING_SIZE,"    f2d\n");
             break;
         }
+    }
+    if(current_table()->level > 0){
+        fprintf(asmOut,buf);
+    }
+    else{
+        asmQueueGlobal(buf);
     }
 }
 
 void asmGenLiteral(typeStruct_t* pConst){
+    char buf[MAX_STRING_SIZE];
+    bzero(buf,MAX_STRING_SIZE);
     switch(pConst->v_type){
     case T_INT:
-        fprintf(asmOut,"    ldc %d\n",pConst->val);
+        snprintf(buf,MAX_STRING_SIZE,"    ldc %d\n",pConst->val);
         break;
     case T_BOOL:
-        fprintf(asmOut,"    iconst_%d\n",pConst->val);
+        snprintf(buf,MAX_STRING_SIZE,"    iconst_%d\n",pConst->val);
         break;
     case T_STRING:
-        fprintf(asmOut,"    ldc \"%s\"\n",pConst->sval);
+        snprintf(buf,MAX_STRING_SIZE,"    ldc \"%s\"\n",pConst->sval);
         break;
     case T_FLOAT:
-        fprintf(asmOut,"    ldc %f\n",pConst->fval);
+        snprintf(buf,MAX_STRING_SIZE,"    ldc %f\n",pConst->fval);
         break;
     case T_DOUBLE:
-        fprintf(asmOut,"    ldc2_w %lf\n",pConst->dval);
+        snprintf(buf,MAX_STRING_SIZE,"    ldc2_w %lf\n",pConst->dval);
         break;
-    }  
-    
+    } 
+    asmGlobalWrapper(buf); 
 }
 
 void asmGenStoreEntry(s_table_entry* ent){
@@ -2812,9 +2826,12 @@ void asmGenStoreEntry(s_table_entry* ent){
             fprintf(asmOut,"    %sstore %d\n",prefix,ent->varNum);
         }
         else{
-            // global   
+            // global  
             if(ent->type.v_type >= 0){
-                fprintf(asmOut,"    putstatic %s/%s %s\n",OUT_NAME,ent->name,TYPE_ASM[ent->type.v_type]);
+                char buf[MAX_STRING_SIZE];
+                bzero(buf,MAX_STRING_SIZE);
+                snprintf(buf,MAX_STRING_SIZE,"    putstatic %s/%s %s\n",OUT_NAME,ent->name,TYPE_ASM[ent->type.v_type]);
+                asmGlobalWrapper(buf); 
             }
         }
     }
@@ -2854,6 +2871,17 @@ void asmGenFunctionTypebyList(typeList_t* pList){
     }
 }
 
+void asmQueueGlobal(const char* str){ 
+        strncat(globalQueStr,str, MAX_GLOBAL_QUEUE_LENGTH - strlen(globalQueStr));    
+}
+void asmGlobalWrapper(const char* str){
+    if(current_table()->level > 0){
+        fprintf(asmOut,str);
+    }
+    else{
+        asmQueueGlobal(str);
+    }
+}
 int  main( int argc, char **argv )
 {
 
@@ -2882,6 +2910,7 @@ int  main( int argc, char **argv )
         init_errorPool();
         initLabelMgmt(&labelM);
         initFuncCallStk();
+        globalQueStr[0] = '\0';
 
         asmGenProgramHead();
 	yyin = fp;

@@ -22,7 +22,7 @@ int main() {
 	return 0;
 }
 
-void function(){};
+void function(){}
 
 float square( float a ) {
 	return a * a;

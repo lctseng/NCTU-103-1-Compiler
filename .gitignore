@@ -3,3 +3,4 @@ scanner
 *.out
 *.swp
 Hw1/NCTU-Compiler-Hw1-Tester
+.nfs*
