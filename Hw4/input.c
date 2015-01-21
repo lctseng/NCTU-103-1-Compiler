@@ -4,31 +4,15 @@
 #pragma statistic off
 #pragma symbol on
 
-int gga = 10;
-double ggd = 5.58;
-
-void printDouble(double d,int l,double c,float r){
-    print d;
-    print "\n";
-    print l;
-    print "\n";
-    print c;
-    print "\n";
-    print r;
-    print "\n";
-    print gga;
-    print "\n";
-}
-
 int main(){
-    double a;
-    int b;
-    a = 1.0001;
-    b = 10;
-    print ggd;
-    print "\n";
-    printDouble(b,b,b,b);
+    double a = 1, b = 2;
+    const double c = 3, d = 4;
+    print a;
+    print b;
+    print c;
+    if(true){
+        return 0;
+    }
+    print d;
     return 0;
 }
-
-

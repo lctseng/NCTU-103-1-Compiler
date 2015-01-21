@@ -1598,8 +1598,11 @@ one_or_more_for_assignment : single_assginment
 jump_stat : KW_RETURN expr SEMICOLON {
                     process_return_function_check(&$2);
                     lastStmtType = STMT_RETURN;
-                    if(!funcOption.isMain){
-                        asmGenFunctionReturn(funcOption.retType,$2.v_type); 
+                    if(funcOption.isMain){
+                        asmGenFunctionReturn(T_VOID,T_ERROR); 
+                    }
+                    else{
+                        asmGenFunctionReturn(funcOption.retType,$2.v_type);  
                     }
                 }
           | KW_BREAK SEMICOLON {
@@ -2704,10 +2707,16 @@ void asmGenFunctionTail(){
     fprintf(asmOut,".end method\n");
 }
 void asmGenFunctionReturn(int dstType,int srcType){
-    // coercion
-    asmGenCoercion(dstType,srcType);
-    // generate return instruction
-    fprintf(asmOut,"    %sreturn\n",TYPE_ASM_PREFIX[dstType]);
+    if(dstType == T_VOID){
+        // void return
+        fprintf(asmOut,"    return\n");
+    }
+    else{
+        // coercion
+        asmGenCoercion(dstType,srcType);
+        // generate return instruction
+        fprintf(asmOut,"    %sreturn\n",TYPE_ASM_PREFIX[dstType]);
+    }
     
 }
 void asmGenPrintHead(){

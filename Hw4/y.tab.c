@@ -1550,11 +1550,11 @@ static const yytype_uint16 yyrline[] =
     1523,  1526,  1527,  1532,  1533,  1534,  1535,  1536,  1537,  1538,
     1546,  1546,  1548,  1548,  1549,  1567,  1567,  1567,  1568,  1568,
     1568,  1568,  1573,  1573,  1573,  1573,  1573,  1573,  1576,  1577,
-    1580,  1581,  1582,  1585,  1593,  1594,  1598,  1605,  1610,  1618,
-    1619,  1619,  1624,  1624,  1631,  1637,  1673,  1681,  1687,  1722,
-    1738,  1739,  1740,  1741,  1742,  1743,  1746,  1747,  1750,  1755,
-    1759,  1763,  1767,  1771,  1793,  1794,  1797,  1832,  1853,  1857,
-    1860,  1894,  1894,  1912,  1914,  1921,  1929
+    1580,  1581,  1582,  1585,  1593,  1594,  1598,  1608,  1613,  1621,
+    1622,  1622,  1627,  1627,  1634,  1640,  1676,  1684,  1690,  1725,
+    1741,  1742,  1743,  1744,  1745,  1746,  1749,  1750,  1753,  1758,
+    1762,  1766,  1770,  1774,  1796,  1797,  1800,  1835,  1856,  1860,
+    1863,  1897,  1897,  1915,  1917,  1924,  1932
 };
 #endif
 
@@ -3081,77 +3081,80 @@ yyreduce:
     {
                     process_return_function_check(&(yyvsp[-1].typeStruct));
                     lastStmtType = STMT_RETURN;
-                    if(!funcOption.isMain){
-                        asmGenFunctionReturn(funcOption.retType,(yyvsp[-1].typeStruct).v_type); 
+                    if(funcOption.isMain){
+                        asmGenFunctionReturn(T_VOID,T_ERROR); 
+                    }
+                    else{
+                        asmGenFunctionReturn(funcOption.retType,(yyvsp[-1].typeStruct).v_type);  
                     }
                 }
-#line 3089 "y.tab.c" /* yacc.c:1646  */
+#line 3092 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 1605 "parser.y" /* yacc.c:1646  */
+#line 1608 "parser.y" /* yacc.c:1646  */
     {
                     process_loop_check(); 
                     lastStmtType = STMT_NORMAL;
                     asmGenLoopControl(LOOP_CTRL_BREAK);
                 }
-#line 3099 "y.tab.c" /* yacc.c:1646  */
+#line 3102 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 1610 "parser.y" /* yacc.c:1646  */
+#line 1613 "parser.y" /* yacc.c:1646  */
     {
                     process_loop_check();
                     lastStmtType = STMT_NORMAL;
                     asmGenLoopControl(LOOP_CTRL_CONTINUE);
                 }
-#line 3109 "y.tab.c" /* yacc.c:1646  */
+#line 3112 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 1619 "parser.y" /* yacc.c:1646  */
+#line 1622 "parser.y" /* yacc.c:1646  */
     {asmGenPrintHead();}
-#line 3115 "y.tab.c" /* yacc.c:1646  */
+#line 3118 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 1619 "parser.y" /* yacc.c:1646  */
+#line 1622 "parser.y" /* yacc.c:1646  */
     {
                     check_printable(&(yyvsp[-1].typeStruct));
                     asmGenPrintTail(&(yyvsp[-1].typeStruct));
                     
                 }
-#line 3125 "y.tab.c" /* yacc.c:1646  */
+#line 3128 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 1624 "parser.y" /* yacc.c:1646  */
+#line 1627 "parser.y" /* yacc.c:1646  */
     {asmGenReadHead();}
-#line 3131 "y.tab.c" /* yacc.c:1646  */
+#line 3134 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 1624 "parser.y" /* yacc.c:1646  */
+#line 1627 "parser.y" /* yacc.c:1646  */
     { 
                     check_readable(&(yyvsp[-1].typeStruct)); 
                     asmGenReadTail(&(yyvsp[-1].typeStruct));
                     
                 }
-#line 3141 "y.tab.c" /* yacc.c:1646  */
+#line 3144 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 1632 "parser.y" /* yacc.c:1646  */
+#line 1635 "parser.y" /* yacc.c:1646  */
     {
                 (yyval.typeStruct).sval = (yyvsp[0].text); // name
                 fill_type_for_name((typeStruct_t*)&(yyval.typeStruct),(yyvsp[0].text),DEFAULT_TYPE_FLAG);
                 (yyval.typeStruct).is_raw = false;
             }
-#line 3151 "y.tab.c" /* yacc.c:1646  */
+#line 3154 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 1638 "parser.y" /* yacc.c:1646  */
+#line 1641 "parser.y" /* yacc.c:1646  */
     {
                 (yyval.typeStruct).sval = (yyvsp[-1].text); // name
                 fill_type_for_name((typeStruct_t*)&(yyval.typeStruct),(yyvsp[-1].text),DEFAULT_TYPE_FLAG);
@@ -3185,11 +3188,11 @@ yyreduce:
                 }
                 (yyval.typeStruct).is_const = false;
             }
-#line 3189 "y.tab.c" /* yacc.c:1646  */
+#line 3192 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 1674 "parser.y" /* yacc.c:1646  */
+#line 1677 "parser.y" /* yacc.c:1646  */
     {
                         //DEBUG//printf("int:Reduce singe_array to array\n");
                         // merge index
@@ -3197,20 +3200,20 @@ yyreduce:
                         (yyval.typeStruct).dims[(yyval.typeStruct).dim] = (yyvsp[-1].typeStruct).dims[0];
                         (yyval.typeStruct).dim++;
                     }
-#line 3201 "y.tab.c" /* yacc.c:1646  */
+#line 3204 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 1682 "parser.y" /* yacc.c:1646  */
+#line 1685 "parser.y" /* yacc.c:1646  */
     {
                     //DEBUG//printf("int:Reduce singe to array\n");
                      
                 }
-#line 3210 "y.tab.c" /* yacc.c:1646  */
+#line 3213 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 1688 "parser.y" /* yacc.c:1646  */
+#line 1691 "parser.y" /* yacc.c:1646  */
     {
                                 (yyval.typeStruct).dim = 1;
                                 //DEBUG//printf("int:Reduce to single indice\n");    
@@ -3241,11 +3244,11 @@ yyreduce:
                                 }
 
                             }
-#line 3245 "y.tab.c" /* yacc.c:1646  */
+#line 3248 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 1723 "parser.y" /* yacc.c:1646  */
+#line 1726 "parser.y" /* yacc.c:1646  */
     {
                 (yyval.typeStruct) = (yyvsp[0].typeStruct);
                 // check type consist
@@ -3259,51 +3262,51 @@ yyreduce:
                     }
                 }
             }
-#line 3263 "y.tab.c" /* yacc.c:1646  */
+#line 3266 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 1751 "parser.y" /* yacc.c:1646  */
+#line 1754 "parser.y" /* yacc.c:1646  */
     {
             asmGenBinaryExpression(&(yyval.typeStruct),&(yyvsp[-2].typeStruct),&(yyvsp[0].typeStruct),OP_ADD);
         }
-#line 3271 "y.tab.c" /* yacc.c:1646  */
+#line 3274 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 119:
-#line 1756 "parser.y" /* yacc.c:1646  */
+#line 1759 "parser.y" /* yacc.c:1646  */
     {
             asmGenBinaryExpression(&(yyval.typeStruct),&(yyvsp[-2].typeStruct),&(yyvsp[0].typeStruct),OP_SUB);
         }
-#line 3279 "y.tab.c" /* yacc.c:1646  */
+#line 3282 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 120:
-#line 1760 "parser.y" /* yacc.c:1646  */
+#line 1763 "parser.y" /* yacc.c:1646  */
     {
             asmGenBinaryExpression(&(yyval.typeStruct),&(yyvsp[-2].typeStruct),&(yyvsp[0].typeStruct),OP_MUL);
         }
-#line 3287 "y.tab.c" /* yacc.c:1646  */
+#line 3290 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 121:
-#line 1764 "parser.y" /* yacc.c:1646  */
+#line 1767 "parser.y" /* yacc.c:1646  */
     {
             asmGenBinaryExpression(&(yyval.typeStruct),&(yyvsp[-2].typeStruct),&(yyvsp[0].typeStruct),OP_DIV);
         }
-#line 3295 "y.tab.c" /* yacc.c:1646  */
+#line 3298 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 122:
-#line 1768 "parser.y" /* yacc.c:1646  */
+#line 1771 "parser.y" /* yacc.c:1646  */
     {
             asmGenBinaryExpression(&(yyval.typeStruct),&(yyvsp[-2].typeStruct),&(yyvsp[0].typeStruct),OP_MOD);
         }
-#line 3303 "y.tab.c" /* yacc.c:1646  */
+#line 3306 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 123:
-#line 1771 "parser.y" /* yacc.c:1646  */
+#line 1774 "parser.y" /* yacc.c:1646  */
     {
             //DEBUG//printf("Reduce with negation operator, original const is %s\n",$2.is_const ?  "true" : "false");
             (yyval.typeStruct) = (yyvsp[0].typeStruct);
@@ -3326,25 +3329,25 @@ yyreduce:
             asmGenOperator(&(yyval.typeStruct),OP_NEG);
     
         }
-#line 3330 "y.tab.c" /* yacc.c:1646  */
+#line 3333 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 124:
-#line 1793 "parser.y" /* yacc.c:1646  */
+#line 1796 "parser.y" /* yacc.c:1646  */
     { (yyval.typeStruct) = (yyvsp[-1].typeStruct); }
-#line 3336 "y.tab.c" /* yacc.c:1646  */
+#line 3339 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 125:
-#line 1794 "parser.y" /* yacc.c:1646  */
+#line 1797 "parser.y" /* yacc.c:1646  */
     {
             asmGenBinaryExpression(&(yyval.typeStruct),&(yyvsp[-2].typeStruct),&(yyvsp[0].typeStruct),(yyvsp[-1].value));
         }
-#line 3344 "y.tab.c" /* yacc.c:1646  */
+#line 3347 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 126:
-#line 1797 "parser.y" /* yacc.c:1646  */
+#line 1800 "parser.y" /* yacc.c:1646  */
     {
         // both side need to be boolean type
         if((yyvsp[-2].typeStruct).v_type != T_BOOL){ // p1 error
@@ -3380,11 +3383,11 @@ yyreduce:
         }
         (yyval.typeStruct).is_const = false;
      }
-#line 3384 "y.tab.c" /* yacc.c:1646  */
+#line 3387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 127:
-#line 1832 "parser.y" /* yacc.c:1646  */
+#line 1835 "parser.y" /* yacc.c:1646  */
     {
         (yyval.typeStruct) = (yyvsp[0].typeStruct); // important, assign result 
         // check if type is not bool
@@ -3406,28 +3409,28 @@ yyreduce:
         fprintf(asmOut,"    iconst_1\n");
         asmGenOperator(&(yyval.typeStruct),(yyvsp[-1].value));
      }
-#line 3410 "y.tab.c" /* yacc.c:1646  */
+#line 3413 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 128:
-#line 1853 "parser.y" /* yacc.c:1646  */
+#line 1856 "parser.y" /* yacc.c:1646  */
     {
         // load the value to the top of stack
         asmGenLiteral(&(yyvsp[0].typeStruct));
      }
-#line 3419 "y.tab.c" /* yacc.c:1646  */
+#line 3422 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 129:
-#line 1857 "parser.y" /* yacc.c:1646  */
+#line 1860 "parser.y" /* yacc.c:1646  */
     {
         asmGenFunctionCall((yyvsp[0].typeStruct).sval,false);
      }
-#line 3427 "y.tab.c" /* yacc.c:1646  */
+#line 3430 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 130:
-#line 1860 "parser.y" /* yacc.c:1646  */
+#line 1863 "parser.y" /* yacc.c:1646  */
     {
         // the operand stack will load this variable
         //DEBUG//printf("Reference to Variable %s\n",$1.sval);
@@ -3458,17 +3461,17 @@ yyreduce:
             }
         }
      }
-#line 3462 "y.tab.c" /* yacc.c:1646  */
+#line 3465 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 131:
-#line 1894 "parser.y" /* yacc.c:1646  */
+#line 1897 "parser.y" /* yacc.c:1646  */
     {pushFuncCall((yyvsp[-1].text));}
-#line 3468 "y.tab.c" /* yacc.c:1646  */
+#line 3471 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 132:
-#line 1894 "parser.y" /* yacc.c:1646  */
+#line 1897 "parser.y" /* yacc.c:1646  */
     {
                 popFuncCall();
                 // check function consistency
@@ -3485,20 +3488,20 @@ yyreduce:
                 (yyval.typeStruct).is_const = false;
 
            }
-#line 3489 "y.tab.c" /* yacc.c:1646  */
+#line 3492 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 134:
-#line 1914 "parser.y" /* yacc.c:1646  */
+#line 1917 "parser.y" /* yacc.c:1646  */
     {
                             // empty, build empty list
                             (yyval.typeList).end = 0;
                         }
-#line 3498 "y.tab.c" /* yacc.c:1646  */
+#line 3501 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 135:
-#line 1922 "parser.y" /* yacc.c:1646  */
+#line 1925 "parser.y" /* yacc.c:1646  */
     {
                 // build from single expr
                 (yyval.typeList).end = 1;
@@ -3506,11 +3509,11 @@ yyreduce:
                 // match expr coercion
                 asmGenFunctionCallCoercion(&(yyvsp[0].typeStruct));
             }
-#line 3510 "y.tab.c" /* yacc.c:1646  */
+#line 3513 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 136:
-#line 1930 "parser.y" /* yacc.c:1646  */
+#line 1933 "parser.y" /* yacc.c:1646  */
     {
                 // copy list
                 (yyval.typeList) = (yyvsp[-2].typeList);
@@ -3520,11 +3523,11 @@ yyreduce:
                 // match expr coercion
                 asmGenFunctionCallCoercion(&(yyvsp[0].typeStruct));
             }
-#line 3524 "y.tab.c" /* yacc.c:1646  */
+#line 3527 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 3528 "y.tab.c" /* yacc.c:1646  */
+#line 3531 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -3752,7 +3755,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1942 "parser.y" /* yacc.c:1906  */
+#line 1945 "parser.y" /* yacc.c:1906  */
 
 
 int clear(){
@@ -4518,10 +4521,16 @@ void asmGenFunctionTail(){
     fprintf(asmOut,".end method\n");
 }
 void asmGenFunctionReturn(int dstType,int srcType){
-    // coercion
-    asmGenCoercion(dstType,srcType);
-    // generate return instruction
-    fprintf(asmOut,"    %sreturn\n",TYPE_ASM_PREFIX[dstType]);
+    if(dstType == T_VOID){
+        // void return
+        fprintf(asmOut,"    return\n");
+    }
+    else{
+        // coercion
+        asmGenCoercion(dstType,srcType);
+        // generate return instruction
+        fprintf(asmOut,"    %sreturn\n",TYPE_ASM_PREFIX[dstType]);
+    }
     
 }
 void asmGenPrintHead(){
